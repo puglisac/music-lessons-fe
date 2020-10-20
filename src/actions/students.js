@@ -11,7 +11,7 @@ function loginStudent(username, password) {
             dispatch(gotToken(data.token));
         }
         catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
