@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from './Copyright';
+import { loginStudent } from "./actions/students";
+import { loginTeacher } from "./actions/teachers";
+import { useDispatch } from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,6 +40,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const initialState = {
+        username: "",
+        password: "",
+        teacher: false
+    };
+    const [formData, setFormData] = useState(initialState);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((data) => ({
+            ...data,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const { username, password, teacher } = formData;
+        if (teacher) {
+            dispatch(loginTeacher(username, password));
+        } else {
+            dispatch(loginStudent(username, password));
+        }
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -47,7 +76,7 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Sign in
         </Typography>
-                <form className={classes.form} noValidate>
+                <form onSubmit={handleSubmit} className={classes.form} noValidate>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -58,6 +87,8 @@ export default function SignIn() {
                         name="username"
                         autoComplete="username"
                         autoFocus
+                        value={formData.username}
+                        onChange={handleChange}
                     />
                     <TextField
                         variant="outlined"
@@ -69,9 +100,15 @@ export default function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={formData.password}
+                        onChange={handleChange}
                     />
                     <FormControlLabel
-                        control={<Checkbox value="teacher" color="primary" />}
+                        control={<Checkbox
+                            name="teacher"
+                            value={formData.teacher}
+                            onChange={handleChange}
+                            color="primary" />}
                         label="I am a teacher"
                     />
                     <Button

@@ -7,8 +7,8 @@ function loginTeacher(username, password) {
     return async function (dispatch) {
 
         try {
-            const token = await axios.post(`${BASE_URL}teachers/login`).send({ username, password });
-            dispatch(gotToken(token));
+            const { data } = await axios.post(`${BASE_URL}teachers/login`, { username, password });
+            dispatch(gotToken(data.token));
         }
         catch (e) {
             console.log(e);
@@ -19,8 +19,8 @@ function loginTeacher(username, password) {
 function signUpTeacher(username, password, full_name, email) {
     return async function (dispatch) {
         try {
-            const token = await axios.post(`${BASE_URL}teachers/signup`).send({ username, password, full_name, email });
-            dispatch(gotToken(token));
+            const { data } = await axios.post(`${BASE_URL}teachers/signup`, { username, password, full_name, email });
+            dispatch(gotToken(data.token));
         }
         catch (e) {
             console.log(e);
@@ -35,8 +35,8 @@ function gotToken(token) {
 function getTeacher(username, _token) {
     return async function (dispatch) {
         try {
-            const teacher = await axios.post(`${BASE_URL}teachers/${username}`).send({ _token });
-            dispatch(gotTeacher(teacher));
+            const { data } = await axios.post(`${BASE_URL}teachers/${username}`, { _token });
+            dispatch(gotTeacher(data.teacher));
         }
         catch (e) {
             console.log(e);
@@ -47,8 +47,8 @@ function getTeacher(username, _token) {
 function editTeacher(username, data, _token) {
     return async function (dispatch) {
         try {
-            const teacher = await axios.patch(`${BASE_URL}teachers/${username}`).send({ _token, ...data });
-            dispatch(gotTeacher(teacher));
+            const { data } = await axios.patch(`${BASE_URL}teachers/${username}`, { _token, ...data });
+            dispatch(gotTeacher(data.teacher));
         } catch (e) {
             console.log(e);
         }
@@ -62,8 +62,8 @@ function gotTeacher(teacher) {
 function getStudents(username, _token) {
     return async function (dispatch) {
         try {
-            const students = await axios.patch(`${BASE_URL}teachers/${username}/students`).send({ _token });
-            dispatch(gotStudents(students));
+            const { data } = await axios.patch(`${BASE_URL}teachers/${username}/students`, { _token });
+            dispatch(gotStudents(data.students));
         } catch (e) {
             console.log(e);
         }
@@ -73,8 +73,8 @@ function getStudents(username, _token) {
 function addStudent(teacher_username, student_username, _token) {
     return async function () {
         try {
-            const student = await axios.patch(`${BASE_URL}teachers/${teacher_username}/add_student`).send({ student_username, _token });
-            addedStudent(student);
+            const { data } = await axios.patch(`${BASE_URL}teachers/${teacher_username}/add_student`, { student_username, _token });
+            addedStudent(data.student);
         } catch (e) {
             console.log(e);
         }
@@ -88,7 +88,7 @@ function addedStudent(student) {
 function removeStudent(teacher_username, student_username, _token) {
     return async function () {
         try {
-            await axios.patch(`${BASE_URL}teachers/${teacher_username}/remove_student`).send({ student_username, _token });
+            await axios.patch(`${BASE_URL}teachers/${teacher_username}/remove_student`, { student_username, _token });
             deleteStudent(student_username);
         } catch (e) {
             console.log(e);
@@ -105,7 +105,7 @@ function gotStudents(students) {
 function deleteTeacher(username, _token) {
     return async function (dispatch) {
         try {
-            await axios.delete(`${BASE_URL}teachers/${username}/`).send({ _token });
+            await axios.delete(`${BASE_URL}teachers/${username}/`, { _token });
             dispatch(logout());
         } catch (e) {
             console.log(e);

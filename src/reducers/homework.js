@@ -3,7 +3,7 @@ import { GET_HOMEWORK, ADD_HOMEWORK, REMOVE_HOMEWORK } from "../actions/actionTy
 export default function homework(state = null, action) {
     switch (action.type) {
         case GET_HOMEWORK:
-            const homework = { ...state, homework: action.homework };
+            const homework = { ...state, homework: action.payload };
             return homework;
         case ADD_HOMEWORK:
             const addedHomework = { ...state, [action.payload.id]: action.payload };

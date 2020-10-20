@@ -7,8 +7,8 @@ function homework(teacher_username, student_username, lesson_id, _token) {
     return async function (dispatch) {
 
         try {
-            const homework = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`).send({ _token });
-            dispatch(gotHomework(homework));
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { _token });
+            dispatch(gotHomework(data.homework));
         }
         catch (e) {
             console.log(e);
@@ -19,8 +19,8 @@ function homework(teacher_username, student_username, lesson_id, _token) {
 function getOneHomework(teacher_username, student_username, lesson_id, id, _token) {
     return async function (dispatch) {
         try {
-            const homework = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`).send({ _token });
-            dispatch(gotHomework(homework));
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token });
+            dispatch(gotHomework(data.homework));
         }
         catch (e) {
             console.log(e);
@@ -31,8 +31,8 @@ function getOneHomework(teacher_username, student_username, lesson_id, id, _toke
 function createHomework(teacher_username, student_username, lesson_id, note, _token) {
     return async function (dispatch) {
         try {
-            const homework = await axios.post(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`).send({ note, _token });
-            dispatch(addHomework(homework));
+            const { data } = await axios.post(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { note, _token });
+            dispatch(addHomework(data.homework));
         }
         catch (e) {
             console.log(e);
@@ -47,7 +47,7 @@ function addHomework(homework) {
 function deleteHomework(teacher_username, student_username, lesson_id, id, _token) {
     return async function (dispatch) {
         try {
-            await axios.delete(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`).send({ _token });
+            await axios.delete(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token });
             dispatch(removeHomework(id));
         }
         catch (e) {
@@ -67,8 +67,8 @@ function gotHomework(homework) {
 function editHomework(teacher_username, student_username, lesson_id, id, data, _token) {
     return async function (dispatch) {
         try {
-            const homework = await axios.patch(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`).send({ _token, ...data });
-            dispatch(addHomework(homework));
+            const { data } = await axios.patch(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token, ...data });
+            dispatch(addHomework(data.homework));
         } catch (e) {
             console.log(e);
         }

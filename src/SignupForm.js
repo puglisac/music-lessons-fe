@@ -90,6 +90,7 @@ export default function SignUp() {
                                 autoComplete="username"
                                 value={formData.username}
                                 onChange={handleChange}
+                                autoFocus
                             />
                         </Grid>
                         <Grid item xs={12}>

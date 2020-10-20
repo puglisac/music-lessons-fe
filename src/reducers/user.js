@@ -3,7 +3,7 @@ import { GET_USER, LOGOUT } from "../actions/actionTypes";
 export default function user(state = null, action) {
     switch (action.type) {
         case GET_USER:
-            const currUser = { ...state, user: action.user };
+            const currUser = { ...state, user: action.payload };
             return currUser;
         case LOGOUT:
             return { ...state, user: null };

@@ -7,8 +7,8 @@ function notes(teacher_username, student_username, lesson_id, _token) {
     return async function (dispatch) {
 
         try {
-            const notes = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`).send({ _token });
-            dispatch(gotNotes(notes));
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { _token });
+            dispatch(gotNotes(data.notes));
         }
         catch (e) {
             console.log(e);
@@ -19,8 +19,8 @@ function notes(teacher_username, student_username, lesson_id, _token) {
 function getOneNote(teacher_username, student_username, lesson_id, id, _token) {
     return async function (dispatch) {
         try {
-            const note = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`).send({ _token });
-            dispatch(gotNotes(note));
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token });
+            dispatch(gotNotes(data.note));
         }
         catch (e) {
             console.log(e);
@@ -31,8 +31,8 @@ function getOneNote(teacher_username, student_username, lesson_id, id, _token) {
 function createNote(teacher_username, student_username, lesson_id, note, _token) {
     return async function (dispatch) {
         try {
-            const note = await axios.post(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`).send({ note, _token });
-            dispatch(addNote(note));
+            const { data } = await axios.post(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { note, _token });
+            dispatch(addNote(data.note));
         }
         catch (e) {
             console.log(e);
@@ -47,7 +47,7 @@ function addNote(note) {
 function deleteNote(teacher_username, student_username, lesson_id, id, _token) {
     return async function (dispatch) {
         try {
-            await axios.delete(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`).send({ _token });
+            await axios.delete(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token });
             dispatch(deleteNote(id));
         }
         catch (e) {
@@ -67,8 +67,8 @@ function gotNotes(notes) {
 function editNote(teacher_username, student_username, lesson_id, id, data, _token) {
     return async function (dispatch) {
         try {
-            const note = await axios.patch(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`).send({ _token, ...data });
-            dispatch(addNote(note));
+            const { data } = await axios.patch(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token, ...data });
+            dispatch(addNote(data.note));
         } catch (e) {
             console.log(e);
         }
