@@ -61,7 +61,7 @@ function removeHomework(id) {
 }
 
 function gotHomework(homework) {
-    return { type: GET_NOTES, homework: homework };
+    return { type: GET_HOMEWORK, homework: homework };
 }
 
 function editHomework(teacher_username, student_username, lesson_id, id, data, _token) {
