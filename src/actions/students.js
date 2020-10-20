@@ -7,8 +7,8 @@ function loginStudent(username, password) {
     return async function (dispatch) {
 
         try {
-            const { data } = await axios.post(`${BASE_URL}students/login`, { username, password });
-            dispatch(gotToken(data.token));
+            const res = await axios.post(`${BASE_URL}students/login`, { username, password });
+            dispatch(gotToken(res.data.token));
         }
         catch (e) {
             console.log(e);
@@ -19,7 +19,7 @@ function loginStudent(username, password) {
 function signUpStudent(username, password, full_name, email) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.post(`${BASE_URL}students/signup`, { username, password, full_name, email }).data;
+            const { data } = await axios.post(`${BASE_URL}students/signup`, { username, password, full_name, email });
             dispatch(gotToken(data.token));
         }
         catch (e) {
