@@ -1,6 +1,6 @@
 import { GET_HOMEWORK, ADD_HOMEWORK, REMOVE_HOMEWORK } from "../actions/actionTypes";
 
-export default function homework(state = null, action) {
+export default function homework(state = { homework: null }, action) {
     switch (action.type) {
         case GET_HOMEWORK:
             const homework = { ...state, homework: action.payload };

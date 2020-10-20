@@ -1,6 +1,6 @@
 import { GET_LESSONS, ADD_LESSON, REMOVE_LESSON } from "../actions/actionTypes";
 
-export default function lessons(state = null, action) {
+export default function lessons(state = { lessons: null }, action) {
     switch (action.type) {
         case GET_LESSONS:
             const lessons = { ...state, lessons: action.payload };

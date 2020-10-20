@@ -44,10 +44,10 @@ function getTeacher(username, _token) {
     };
 }
 
-function editTeacher(username, data, _token) {
+function editTeacher(username, edits, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.patch(`${BASE_URL}teachers/${username}`, { _token, ...data });
+            const { data } = await axios.patch(`${BASE_URL}teachers/${username}`, { _token, ...edits });
             dispatch(gotTeacher(data.teacher));
         } catch (e) {
             console.log(e);

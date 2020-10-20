@@ -7,7 +7,7 @@ function loginStudent(username, password) {
     return async function (dispatch) {
 
         try {
-            const { data } = await axios.post(`${BASE_URL}students/login`, { username, password }).data;
+            const { data } = await axios.post(`${BASE_URL}students/login`, { username, password });
             dispatch(gotToken(data.token));
         }
         catch (e) {
@@ -44,10 +44,10 @@ function getStudent(username, _token) {
     };
 }
 
-function editStudent(username, data, _token) {
+function editStudent(username, edits, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.patch(`${BASE_URL}students/${username}`, { _token, ...data });
+            const { data } = await axios.patch(`${BASE_URL}students/${username}`, { _token, ...edits });
             dispatch(gotStudent(data.student));
         } catch (e) {
             console.log(e);
