@@ -7,8 +7,8 @@ function loginStudent(username, password) {
     return async function (dispatch) {
 
         try {
-            const res = await axios.post(`${BASE_URL}students/login`, { username, password });
-            dispatch(gotToken(res.data.token));
+            const { data } = await axios.post(`${BASE_URL}students/login`, { username, password });
+            dispatch(gotToken(data.token));
         }
         catch (e) {
             console.log(e);
