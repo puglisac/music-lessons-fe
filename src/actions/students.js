@@ -19,7 +19,7 @@ function loginStudent(username, password) {
 function signUpStudent(username, password, full_name, email) {
     return async function (dispatch) {
         try {
-            const token = await axios.post(`${BASE_URL}students/signup`).send({ username, password, full_name, email });
+            const token = await axios.post(`${BASE_URL}students/signup`, { username, password, full_name, email });
             dispatch(gotToken(token));
         }
         catch (e) {
@@ -44,7 +44,7 @@ function getStudent(username, _token) {
     };
 }
 
-function editStudent(username, data) {
+function editStudent(username, data, _token) {
     return async function (dispatch) {
         try {
             const student = await axios.patch(`${BASE_URL}students/${username}`).send({ _token, ...data });
