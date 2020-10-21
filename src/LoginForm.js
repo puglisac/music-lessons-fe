@@ -13,9 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from './Copyright';
-import { loginStudent } from "./actions/students";
-import { loginTeacher } from "./actions/teachers";
-import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
+import { getStudent, loginStudent } from "./actions/students";
+import { loginTeacher, getTeacher } from "./actions/teachers";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const { token } = useSelector((st) => st.token);
+    const history = useHistory();
 
     const initialState = {
         username: "",
@@ -60,9 +63,20 @@ export default function SignIn() {
         e.preventDefault();
         const { username, password, teacher } = formData;
         if (teacher) {
-            dispatch(loginTeacher(username, password));
+            try {
+                dispatch(loginTeacher(username, password));
+
+            } catch (e) {
+                alert(e);
+            }
         } else {
-            dispatch(loginStudent(username, password));
+            try {
+                dispatch(loginStudent(username, password));
+
+                history.push("/");
+            } catch (e) {
+                alert(e);
+            }
         }
     };
 

@@ -1,6 +1,6 @@
 import { GET_STUDENTS, ADD_STUDENT, REMOVE_STUDENT } from "../actions/actionTypes";
 
-export default function students(state = { students: null }, action) {
+export default function students(state = {}, action) {
     switch (action.type) {
         case GET_STUDENTS:
             const students = { ...state, students: action.payload };

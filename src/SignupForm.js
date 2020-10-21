@@ -13,9 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from './Copyright';
-import { useDispatch } from "react-redux";
-import { signUpTeacher } from "./actions/teachers";
-import { signUpStudent } from "./actions/students";
+import { useDispatch, useSelector } from "react-redux";
+import { getTeacher, signUpTeacher } from "./actions/teachers";
+import { signUpStudent, getStudent } from "./actions/students";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const { token } = useSelector((st) => st.token);
 
     const initialState = {
         username: "",
@@ -61,9 +62,19 @@ export default function SignUp() {
         e.preventDefault();
         const { username, password, fullName, email, teacher } = formData;
         if (teacher) {
-            dispatch(signUpTeacher(username, password, fullName, email));
+            try {
+                dispatch(signUpTeacher(username, password, fullName, email));
+                dispatch(getTeacher(username, token));
+            } catch (e) {
+                alert(e);
+            }
         } else {
-            dispatch(signUpStudent(username, password, fullName, email));
+            try {
+                dispatch(signUpStudent(username, password, fullName, email));
+                dispatch(getStudent(username, token));
+            } catch (e) {
+                alert(e);
+            }
         }
     };
 

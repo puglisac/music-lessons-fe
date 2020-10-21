@@ -7,7 +7,7 @@ function homework(teacher_username, student_username, lesson_id, _token) {
     return async function (dispatch) {
 
         try {
-            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { _token });
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { params: { _token } });
             dispatch(gotHomework(data.homework));
         }
         catch (e) {
@@ -19,7 +19,7 @@ function homework(teacher_username, student_username, lesson_id, _token) {
 function getOneHomework(teacher_username, student_username, lesson_id, id, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token });
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { params: { _token } });
             dispatch(gotHomework(data.homework));
         }
         catch (e) {

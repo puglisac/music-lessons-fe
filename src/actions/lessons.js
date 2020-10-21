@@ -7,7 +7,7 @@ function lessons(teacher_username, student_username, _token) {
     return async function (dispatch) {
 
         try {
-            const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { _token });
+            const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { params: { _token } });
             dispatch(gotLessons(data.lessons));
         }
         catch (e) {
@@ -19,7 +19,7 @@ function lessons(teacher_username, student_username, _token) {
 function getOneLessons(teacher_username, student_username, id, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}/${id}`, { _token });
+            const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}/${id}`, { params: { _token } });
             dispatch(gotLessons(data.lesson));
         }
         catch (e) {

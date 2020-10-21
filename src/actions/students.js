@@ -9,6 +9,7 @@ function loginStudent(username, password) {
         try {
             const { data } = await axios.post(`${BASE_URL}students/login`, { username, password });
             dispatch(gotToken(data.token));
+            dispatch(getStudent(username, data.token));
         }
         catch (e) {
             alert(e.response.data.message);
@@ -21,9 +22,10 @@ function signUpStudent(username, password, full_name, email) {
         try {
             const { data } = await axios.post(`${BASE_URL}students/signup`, { username, password, full_name, email });
             dispatch(gotToken(data.token));
+            dispatch(getStudent(username, data.token));
         }
         catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -35,11 +37,12 @@ function gotToken(token) {
 function getStudent(username, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.post(`${BASE_URL}students/${username}`, { _token });
+            console.log(_token);
+            const { data } = await axios.get(`${BASE_URL}students/${username}`, { params: { _token } });
             dispatch(gotStudent(data.student));
         }
         catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -50,7 +53,7 @@ function editStudent(username, edits, _token) {
             const { data } = await axios.patch(`${BASE_URL}students/${username}`, { _token, ...edits });
             dispatch(gotStudent(data.student));
         } catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -64,7 +67,7 @@ function deleteStudent(username, _token) {
             await axios.delete(`${BASE_URL}students/${username}/`, { _token });
             dispatch(logout());
         } catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }

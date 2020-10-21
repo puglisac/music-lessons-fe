@@ -9,6 +9,7 @@ function loginTeacher(username, password) {
         try {
             const { data } = await axios.post(`${BASE_URL}teachers/login`, { username, password });
             dispatch(gotToken(data.token));
+            dispatch(getTeacher(username, data.token));
         }
         catch (e) {
             console.log(e);
@@ -21,6 +22,7 @@ function signUpTeacher(username, password, full_name, email) {
         try {
             const { data } = await axios.post(`${BASE_URL}teachers/signup`, { username, password, full_name, email });
             dispatch(gotToken(data.token));
+            dispatch(getTeacher(username, data.token));
         }
         catch (e) {
             console.log(e);
@@ -35,11 +37,11 @@ function gotToken(token) {
 function getTeacher(username, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.post(`${BASE_URL}teachers/${username}`, { _token });
+            const { data } = await axios.get(`${BASE_URL}teachers/${username}`, { params: { _token } });
             dispatch(gotTeacher(data.teacher));
         }
         catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -50,7 +52,7 @@ function editTeacher(username, edits, _token) {
             const { data } = await axios.patch(`${BASE_URL}teachers/${username}`, { _token, ...edits });
             dispatch(gotTeacher(data.teacher));
         } catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -62,10 +64,10 @@ function gotTeacher(teacher) {
 function getStudents(username, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.patch(`${BASE_URL}teachers/${username}/students`, { _token });
+            const { data } = await axios.get(`${BASE_URL}teachers/${username}/students`, { params: { _token } });
             dispatch(gotStudents(data.students));
         } catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -76,7 +78,7 @@ function addStudent(teacher_username, student_username, _token) {
             const { data } = await axios.patch(`${BASE_URL}teachers/${teacher_username}/add_student`, { student_username, _token });
             addedStudent(data.student);
         } catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -91,7 +93,7 @@ function removeStudent(teacher_username, student_username, _token) {
             await axios.patch(`${BASE_URL}teachers/${teacher_username}/remove_student`, { student_username, _token });
             deleteStudent(student_username);
         } catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -108,7 +110,7 @@ function deleteTeacher(username, _token) {
             await axios.delete(`${BASE_URL}teachers/${username}/`, { _token });
             dispatch(logout());
         } catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }

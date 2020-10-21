@@ -1,6 +1,6 @@
 import { GET_NOTES, ADD_NOTE, REMOVE_NOTE } from "../actions/actionTypes";
 
-export default function notes(state = { notes: null }, action) {
+export default function notes(state = {}, action) {
     switch (action.type) {
         case GET_NOTES:
             const notes = { ...state, notes: action.payload };
