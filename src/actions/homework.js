@@ -3,7 +3,7 @@ import { GET_HOMEWORK, ADD_HOMEWORK, REMOVE_HOMEWORK } from "./actionTypes";
 
 const BASE_URL = "http://localhost:5000/";
 
-function homework(teacher_username, student_username, lesson_id, _token) {
+function getHomework(teacher_username, student_username, lesson_id, _token) {
     return async function (dispatch) {
 
         try {
@@ -75,4 +75,4 @@ function editHomework(teacher_username, student_username, lesson_id, id, data, _
     };
 }
 
-export { homework, getOneHomework, createHomework, editHomework, deleteHomework };
+export { getHomework, getOneHomework, createHomework, editHomework, deleteHomework };

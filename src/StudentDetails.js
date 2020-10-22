@@ -43,16 +43,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function StudentHome() {
+export default function StudentDetails() {
     const dispatch = useDispatch();
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
+    const { students } = useSelector((st) => st.students);
+
     const classes = useStyles();
-    const { teacher } = useSelector((st) => st.teacher);
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    useEffect(() => {
-        dispatch(getTeacherInfo(user.teacher_username, token));
-    }, []);
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -61,16 +59,17 @@ export default function StudentHome() {
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-                        {/* user info */}
+                        {/* student info */}
                         <Grid item xs={12} sm={6} md={3}>
                             <Paper className={fixedHeightPaper}>
-                                <UserInfo title="Your info:" user={user} teacher={teacher} />
+                                <h2>{students.username}</h2>
+                                <h4>{students.email} </h4>
                             </Paper>
                         </Grid>
                         {/* Lessons */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <LessonsList teacher_username={user.teacher_username} student_username={user.username} />
+                                <LessonsList teacher_username={user.username} student_username={students.username} />
                             </Paper>
                         </Grid>
                     </Grid>

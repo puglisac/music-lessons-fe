@@ -7,9 +7,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Checkbox from '@material-ui/core/Checkbox';
 import Title from './Title';
-import { getStudents } from './actions/teachers';
-import { getOneStudent } from './actions/teachers';
+import { getHomework } from './actions/homework';
 import { useHistory } from "react-router-dom";
 
 // Generate Order Data
@@ -24,38 +24,35 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function StudentsList() {
-    const { user } = useSelector((st) => st.user);
+export default function NotesList({ teacher_username, student_username, id }) {
     const { token } = useSelector((st) => st.token);
+
     const classes = useStyles();
-    const { students } = useSelector((st) => st.students);
-    const history = useHistory();
+    const { notes } = useSelector((st) => st.notes);
     const dispatch = useDispatch();
+    const homework = useHistory();
 
     useEffect(() => {
-        dispatch(getStudents(user.username, token));
+        dispatch(getHomework(teacher_username, student_username, id, token));
     }, []);
-    const studentDetails = (e) => {
-        dispatch(getOneStudent(e.target.innerText, token));
-        history.push("/student");
-    };
     return (
         <React.Fragment>
-            <Title>Students</Title>
+            <Title>Homework</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Username</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Email</TableCell>
+                        <TableCell>Homework</TableCell>
+                        <TableCell>Completed</TableCell>
+
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {Array.isArray(students) ? students.map((row) => (
-                        <TableRow key={row.username}>
-                            <TableCell><Link onClick={studentDetails}>{row.username}</Link></TableCell>
-                            <TableCell>{row.full_name}</TableCell>
-                            <TableCell>{row.email}</TableCell>
+                    {Array.isArray(homework) ? homework.map((row) => (
+                        <TableRow key={row.id}>
+                            <TableCell data-id={row.id}>{row.assignment}</TableCell>
+                            <TableCell data-id={row.id}><Checkbox value={row.completed ? true : false}
+                                color="primary"
+                            /></TableCell>
                         </TableRow>
                     )) : null}
                 </TableBody>

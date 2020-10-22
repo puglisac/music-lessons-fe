@@ -6,6 +6,8 @@ import LoginForm from "./LoginForm";
 import TeacherHome from "./TeacherHome";
 import StudentHome from "./StudentHome";
 import Home from "./Home";
+import StudentDetails from "./StudentDetails";
+import LessonDetails from './LessonDetails';
 
 function Routes() {
     let home;
@@ -26,6 +28,12 @@ function Routes() {
                 </Route>
                 <Route exact path="/login">
                     <LoginForm />
+                </Route>
+                <Route exact path="/student">
+                    <StudentDetails />
+                </Route>
+                <Route exact path="/lesson">
+                    <LessonDetails />
                 </Route>
             </Switch>
         </div>

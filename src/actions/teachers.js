@@ -87,6 +87,17 @@ function getStudents(username, _token) {
     };
 }
 
+function getOneStudent(username, _token) {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios.get(`${BASE_URL}students/${username}`, { params: { _token } });
+            dispatch(gotStudents(data.student));
+        } catch (e) {
+            alert(e.response.data.message);
+        }
+    };
+}
+
 function addStudent(teacher_username, student_username, _token) {
     return async function () {
         try {
@@ -135,4 +146,4 @@ function logout() {
 }
 
 
-export { loginTeacher, signUpTeacher, getTeacher, logout, editTeacher, getStudents, deleteTeacher, addStudent, removeStudent, getTeacherInfo };
+export { loginTeacher, signUpTeacher, getTeacher, logout, editTeacher, getStudents, deleteTeacher, addStudent, removeStudent, getTeacherInfo, getOneStudent };

@@ -3,7 +3,7 @@ import { GET_NOTES, ADD_NOTE, REMOVE_NOTE } from "./actionTypes";
 
 const BASE_URL = "http://localhost:5000/";
 
-function notes(teacher_username, student_username, lesson_id, _token) {
+function getNotes(teacher_username, student_username, lesson_id, _token) {
     return async function (dispatch) {
 
         try {
@@ -48,7 +48,7 @@ function deleteNote(teacher_username, student_username, lesson_id, id, _token) {
     return async function (dispatch) {
         try {
             await axios.delete(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token });
-            dispatch(deleteNote(id));
+            dispatch(deletedNote(id));
         }
         catch (e) {
             console.log(e);
@@ -56,7 +56,7 @@ function deleteNote(teacher_username, student_username, lesson_id, id, _token) {
     };
 }
 
-function deleteNote(id) {
+function deletedNote(id) {
     return { action: REMOVE_NOTE, payload: id };
 }
 
@@ -75,4 +75,4 @@ function editNote(teacher_username, student_username, lesson_id, id, data, _toke
     };
 }
 
-export { notes, getOneNote, createNote, deleteNote, editNote };
+export { getNotes, getOneNote, createNote, deleteNote, editNote };

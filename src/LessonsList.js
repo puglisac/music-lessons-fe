@@ -8,7 +8,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-import { getLessons } from './actions/lessons';
+import { getLessons, getOneLesson } from './actions/lessons';
+import { useHistory } from "react-router-dom";
 
 // Generate Order Data
 
@@ -22,16 +23,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function StudentsList() {
-    const { user } = useSelector((st) => st.user);
+export default function LessonsList({ teacher_username, student_username }) {
     const { token } = useSelector((st) => st.token);
 
     const classes = useStyles();
     const { lessons } = useSelector((st) => st.lessons);
     const dispatch = useDispatch();
+    const history = useHistory();
+    const lessonDetails = (e) => {
+        dispatch(getOneLesson(teacher_username, student_username, e.target.dataset.id, token));
+        history.push("/lesson");
+    };
     useEffect(() => {
-        dispatch(getLessons(user.teacher_username, user.username, token));
+        dispatch(getLessons(teacher_username, student_username, token));
     }, []);
+    console.log(lessons);
     return (
         <React.Fragment>
             <Title>Lessons</Title>
@@ -44,8 +50,12 @@ export default function StudentsList() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {lessons ? lessons.map((row) => (
-                        <TableRow key={row.date}>
+                    {Array.isArray(lessons) ? lessons.map((row) => (
+
+                        <TableRow key={row.id}>
+                            <Link onClick={lessonDetails}>
+                                <TableCell data-id={row.id}>{row.date}</TableCell>
+                            </Link>
                             <TableCell>{row.teacher_username}</TableCell>
                             <TableCell>{row.student_username}</TableCell>
                         </TableRow>

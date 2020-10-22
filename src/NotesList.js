@@ -8,8 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-import { getStudents } from './actions/teachers';
-import { getOneStudent } from './actions/teachers';
+import { getNotes } from './actions/notes';
 import { useHistory } from "react-router-dom";
 
 // Generate Order Data
@@ -24,38 +23,30 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function StudentsList() {
-    const { user } = useSelector((st) => st.user);
+export default function NotesList({ teacher_username, student_username, id }) {
     const { token } = useSelector((st) => st.token);
+
     const classes = useStyles();
-    const { students } = useSelector((st) => st.students);
-    const history = useHistory();
+    const { notes } = useSelector((st) => st.notes);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
-        dispatch(getStudents(user.username, token));
+        dispatch(getNotes(teacher_username, student_username, id, token));
     }, []);
-    const studentDetails = (e) => {
-        dispatch(getOneStudent(e.target.innerText, token));
-        history.push("/student");
-    };
     return (
         <React.Fragment>
-            <Title>Students</Title>
+            <Title>Notes</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Username</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Email</TableCell>
+                        <TableCell>Note</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {Array.isArray(students) ? students.map((row) => (
-                        <TableRow key={row.username}>
-                            <TableCell><Link onClick={studentDetails}>{row.username}</Link></TableCell>
-                            <TableCell>{row.full_name}</TableCell>
-                            <TableCell>{row.email}</TableCell>
+                    {Array.isArray(notes) ? notes.map((row) => (
+                        <TableRow key={row.id}>
+                            <TableCell data-id={row.id}>{row.note}</TableCell>
                         </TableRow>
                     )) : null}
                 </TableBody>

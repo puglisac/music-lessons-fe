@@ -7,7 +7,9 @@ function getLessons(teacher_username, student_username, _token) {
     return async function (dispatch) {
 
         try {
+
             const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { params: { _token } });
+            console.log(data.lessons);
             dispatch(gotLessons(data.lessons));
         }
         catch (e) {
@@ -16,7 +18,7 @@ function getLessons(teacher_username, student_username, _token) {
     };
 }
 
-function getOneLessons(teacher_username, student_username, id, _token) {
+function getOneLesson(teacher_username, student_username, id, _token) {
     return async function (dispatch) {
         try {
             const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}/${id}`, { params: { _token } });
@@ -61,7 +63,7 @@ function removeLesson(id) {
 }
 
 function gotLessons(lessons) {
-    return { type: GET_LESSONS, lessons: lessons };
+    return { type: GET_LESSONS, payload: lessons };
 }
 
 function editLesson(teacher_username, student_username, id, data, _token) {
@@ -75,4 +77,4 @@ function editLesson(teacher_username, student_username, id, data, _token) {
     };
 }
 
-export { getLessons, getOneLessons, editLesson, deleteLesson, createLesson };
+export { getLessons, getOneLesson, editLesson, deleteLesson, createLesson };

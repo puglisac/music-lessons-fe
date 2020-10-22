@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
+import NotesList from './NotesList';
+import HomeworkList from './HomeworkList';
 import LessonsList from './LessonsList';
 import UserInfo from "./UserInfo";
 import { getTeacherInfo } from './actions/teachers';
@@ -43,16 +45,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function StudentHome() {
+export default function LessonDetails() {
     const dispatch = useDispatch();
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
+    const { students } = useSelector((st) => st.students);
+    const { lessons } = useSelector((st) => st.lessons);
+
     const classes = useStyles();
-    const { teacher } = useSelector((st) => st.teacher);
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    useEffect(() => {
-        dispatch(getTeacherInfo(user.teacher_username, token));
-    }, []);
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -61,16 +62,21 @@ export default function StudentHome() {
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-                        {/* user info */}
+                        {/* student info */}
                         <Grid item xs={12} sm={6} md={3}>
                             <Paper className={fixedHeightPaper}>
-                                <UserInfo title="Your info:" user={user} teacher={teacher} />
+                                <h2>Date: {lessons.date}</h2>
+                                <h4>Teacher: {lessons.teacher_username} </h4>
+                                <h4>Student: {lessons.student_username} </h4>
                             </Paper>
                         </Grid>
                         {/* Lessons */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <LessonsList teacher_username={user.teacher_username} student_username={user.username} />
+                                <NotesList teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} />
+                            </Paper>
+                            <Paper className={classes.paper}>
+                                <HomeworkList teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} />
                             </Paper>
                         </Grid>
                     </Grid>
