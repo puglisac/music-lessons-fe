@@ -16,6 +16,7 @@ import Copyright from './Copyright';
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacher, signUpTeacher } from "./actions/teachers";
 import { signUpStudent, getStudent } from "./actions/students";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -41,7 +42,7 @@ export default function SignUp() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { token } = useSelector((st) => st.token);
-
+    const history = useHistory();
     const initialState = {
         username: "",
         fullName: "",
@@ -64,14 +65,14 @@ export default function SignUp() {
         if (teacher) {
             try {
                 dispatch(signUpTeacher(username, password, fullName, email));
-                dispatch(getTeacher(username, token));
+                history.push("/");
             } catch (e) {
                 alert(e);
             }
         } else {
             try {
                 dispatch(signUpStudent(username, password, fullName, email));
-                dispatch(getStudent(username, token));
+                history.push("/");
             } catch (e) {
                 alert(e);
             }

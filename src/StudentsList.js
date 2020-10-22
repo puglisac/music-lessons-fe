@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,9 +8,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-import { getStudents } from './actions/teachers';
-import { getOneStudent } from './actions/teachers';
+import { getStudents, getOneStudent, removeStudent } from './actions/teachers';
 import { useHistory } from "react-router-dom";
+import { Button } from '@material-ui/core';
 
 // Generate Order Data
 
@@ -34,11 +34,19 @@ export default function StudentsList() {
 
     useEffect(() => {
         dispatch(getStudents(user.username, token));
-    }, []);
+    }, [dispatch, user.username, token]);
+
     const studentDetails = (e) => {
         dispatch(getOneStudent(e.target.innerText, token));
         history.push("/student");
     };
+
+    const deleteStudent = (username) => {
+        dispatch(removeStudent(user.username, username, token));
+    };
+
+    console.log(students);
+
     return (
         <React.Fragment>
             <Title>Students</Title>
@@ -56,6 +64,8 @@ export default function StudentsList() {
                             <TableCell><Link onClick={studentDetails}>{row.username}</Link></TableCell>
                             <TableCell>{row.full_name}</TableCell>
                             <TableCell>{row.email}</TableCell>
+                            <TableCell><Button onClick={() => deleteStudent(row.username)}>delete</Button></TableCell>
+
                         </TableRow>
                     )) : null}
                 </TableBody>

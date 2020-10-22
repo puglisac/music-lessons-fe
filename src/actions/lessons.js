@@ -32,8 +32,9 @@ function getOneLesson(teacher_username, student_username, id, _token) {
 function createLesson(teacher_username, student_username, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.post(`${BASE_URL}lessons/${teacher_username}/${student_username}/`, { _token });
-            dispatch(addLesson(data.lesson));
+            await axios.post(`${BASE_URL}lessons/${teacher_username}/${student_username}/`, { _token });
+            const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { params: { _token } });
+            dispatch(gotLessons(data.lessons));
         }
         catch (e) {
             console.log(e);
@@ -41,15 +42,13 @@ function createLesson(teacher_username, student_username, _token) {
     };
 }
 
-function addLesson(lesson) {
-    return { action: ADD_LESSON, payload: lesson };
-}
 
 function deleteLesson(teacher_username, student_username, id, _token) {
     return async function (dispatch) {
         try {
             await axios.delete(`${BASE_URL}lessons/${teacher_username}/${student_username}/${id}`, { _token });
-            dispatch(removeLesson(id));
+            const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { params: { _token } });
+            dispatch(gotLessons(data.lessons));
         }
         catch (e) {
             console.log(e);
@@ -57,9 +56,6 @@ function deleteLesson(teacher_username, student_username, id, _token) {
     };
 }
 
-function removeLesson(id) {
-    return { action: REMOVE_LESSON, payload: id };
-}
 
 function gotLessons(lessons) {
     return { type: GET_LESSONS, payload: lessons };
@@ -68,8 +64,9 @@ function gotLessons(lessons) {
 function editLesson(teacher_username, student_username, id, data, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.patch(`${BASE_URL}lessons/${teacher_username}/${student_username}/${id}`, { _token, ...data });
-            dispatch(addLesson(data.lesson));
+            await axios.patch(`${BASE_URL}lessons/${teacher_username}/${student_username}/${id}`, { _token, ...data });
+            const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { params: { _token } });
+            dispatch(gotLessons(data.lessons));
         } catch (e) {
             console.log(e);
         }

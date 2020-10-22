@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -13,6 +14,9 @@ import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
 import StudentsList from './StudentsList';
 import UserInfo from "./UserInfo";
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
+import AddStudentForm from './AddStudentForm';
 
 const drawerWidth = 240;
 
@@ -40,9 +44,24 @@ const useStyles = makeStyles((theme) => ({
     fixedHeight: {
         height: 240,
     },
+    typography: {
+        padding: theme.spacing(2),
+    },
 }));
 
 export default function StudentHome() {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
     const { user } = useSelector((st) => st.user);
     const classes = useStyles();
     const { token } = useSelector((st) => st.token);
@@ -67,6 +86,25 @@ export default function StudentHome() {
                             <Paper className={classes.paper}>
                                 <StudentsList />
                             </Paper>
+                            <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
+                                Add student
+      </Button>
+                            <Popover
+                                id={id}
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleClose}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'center',
+                                }}
+                            >
+                                <Typography className={classes.typography}><AddStudentForm teacher_username={user.username} /></Typography>
+                            </Popover>
                         </Grid>
                     </Grid>
                     <Box pt={4}>

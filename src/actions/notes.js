@@ -31,8 +31,9 @@ function getOneNote(teacher_username, student_username, lesson_id, id, _token) {
 function createNote(teacher_username, student_username, lesson_id, note, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.post(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { note, _token });
-            dispatch(addNote(data.note));
+            await axios.post(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { note, _token });
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { params: { _token } });
+            dispatch(gotNotes(data.notes));
         }
         catch (e) {
             console.log(e);
@@ -40,15 +41,13 @@ function createNote(teacher_username, student_username, lesson_id, note, _token)
     };
 }
 
-function addNote(note) {
-    return { action: ADD_NOTE, payload: note };
-}
 
 function deleteNote(teacher_username, student_username, lesson_id, id, _token) {
     return async function (dispatch) {
         try {
             await axios.delete(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token });
-            dispatch(deletedNote(id));
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { params: { _token } });
+            dispatch(gotNotes(data.notes));
         }
         catch (e) {
             console.log(e);
@@ -56,9 +55,6 @@ function deleteNote(teacher_username, student_username, lesson_id, id, _token) {
     };
 }
 
-function deletedNote(id) {
-    return { action: REMOVE_NOTE, payload: id };
-}
 
 function gotNotes(notes) {
     return { type: GET_NOTES, notes: notes };
@@ -67,8 +63,9 @@ function gotNotes(notes) {
 function editNote(teacher_username, student_username, lesson_id, id, data, _token) {
     return async function (dispatch) {
         try {
-            const { data } = await axios.patch(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token, ...data });
-            dispatch(addNote(data.note));
+            await axios.patch(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token, ...data });
+            const { data } = await axios.get(`${BASE_URL}notes/${teacher_username}/${student_username}/${lesson_id}`, { params: { _token } });
+            dispatch(gotNotes(data.notes));
         } catch (e) {
             console.log(e);
         }

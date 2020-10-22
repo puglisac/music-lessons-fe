@@ -52,7 +52,7 @@ function getTeacherInfo(username, _token) {
             dispatch(gotTeacherInfo(data.teacher));
         }
         catch (e) {
-            alert(e.response.data.message);
+            console.log(e);
         }
     };
 }
@@ -82,7 +82,7 @@ function getStudents(username, _token) {
             const { data } = await axios.get(`${BASE_URL}teachers/${username}/students`, { params: { _token } });
             dispatch(gotStudents(data.students));
         } catch (e) {
-            alert(e.response.data.message);
+            console.log(e);
         }
     };
 }
@@ -93,39 +93,36 @@ function getOneStudent(username, _token) {
             const { data } = await axios.get(`${BASE_URL}students/${username}`, { params: { _token } });
             dispatch(gotStudents(data.student));
         } catch (e) {
-            alert(e.response.data.message);
+            console.log(e);
         }
     };
 }
 
 function addStudent(teacher_username, student_username, _token) {
-    return async function () {
+    return async function (dispatch) {
         try {
-            const { data } = await axios.patch(`${BASE_URL}teachers/${teacher_username}/add_student`, { student_username, _token });
-            addedStudent(data.student);
+            await axios.patch(`${BASE_URL}teachers/${teacher_username}/add_student`, { student_username, _token });
+            const { data } = await axios.get(`${BASE_URL}teachers/${teacher_username}/students`, { params: { _token } });
+            dispatch(gotStudents(data.students));
         } catch (e) {
-            alert(e.response.data.message);
+            alert(e);
         }
     };
 }
 
-function addedStudent(student) {
-    return { action: ADD_STUDENT, payload: student };
-}
 
 function removeStudent(teacher_username, student_username, _token) {
-    return async function () {
+    return async function (dispatch) {
         try {
             await axios.patch(`${BASE_URL}teachers/${teacher_username}/remove_student`, { student_username, _token });
-            deleteStudent(student_username);
+            const { data } = await axios.get(`${BASE_URL}teachers/${teacher_username}/students`, { params: { _token } });
+            dispatch(gotStudents(data.students));
         } catch (e) {
-            alert(e.response.data.message);
+            alert(e);
         }
     };
 }
-function deleteStudent(username) {
-    return { type: REMOVE_STUDENT, payload: username };
-}
+
 function gotStudents(students) {
     return { type: GET_STUDENTS, payload: students };
 }
