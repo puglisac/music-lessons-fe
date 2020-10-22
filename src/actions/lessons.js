@@ -9,7 +9,6 @@ function getLessons(teacher_username, student_username, _token) {
         try {
 
             const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { params: { _token } });
-            console.log(data.lessons);
             dispatch(gotLessons(data.lessons));
         }
         catch (e) {

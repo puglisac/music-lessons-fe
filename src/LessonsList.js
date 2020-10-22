@@ -37,7 +37,6 @@ export default function LessonsList({ teacher_username, student_username }) {
     useEffect(() => {
         dispatch(getLessons(teacher_username, student_username, token));
     }, []);
-    console.log(lessons);
     return (
         <React.Fragment>
             <Title>Lessons</Title>
