@@ -65,7 +65,7 @@ export default function SignIn() {
         if (teacher) {
             try {
                 dispatch(loginTeacher(username, password));
-
+                history.push("/");
             } catch (e) {
                 alert(e);
             }

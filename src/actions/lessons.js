@@ -3,7 +3,7 @@ import { GET_LESSONS, ADD_LESSON, REMOVE_LESSON } from "./actionTypes";
 
 const BASE_URL = "http://localhost:5000/";
 
-function lessons(teacher_username, student_username, _token) {
+function getLessons(teacher_username, student_username, _token) {
     return async function (dispatch) {
 
         try {
@@ -11,7 +11,7 @@ function lessons(teacher_username, student_username, _token) {
             dispatch(gotLessons(data.lessons));
         }
         catch (e) {
-            console.log(e);
+            console.log(e.response.data.message);
         }
     };
 }
@@ -75,4 +75,4 @@ function editLesson(teacher_username, student_username, id, data, _token) {
     };
 }
 
-export { lessons, getOneLessons, editLesson, deleteLesson, createLesson };
+export { getLessons, getOneLessons, editLesson, deleteLesson, createLesson };

@@ -12,4 +12,5 @@ export const ADD_HOMEWORK = "ADD_HOMEWORK";
 export const REMOVE_HOMEWORK = "REMOVE_HOMEWORK";
 export const ADD_LESSON = "ADD_LESSON";
 export const REMOVE_LESSON = "REMOVE_LESSON";
+export const GET_TEACHER = "GET_TEACHER";
 export const LOGOUT = "LOGOUT";

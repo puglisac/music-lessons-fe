@@ -11,6 +11,9 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
+import LessonsList from './LessonsList';
+import UserInfo from "./UserInfo";
+import { getTeacherInfo } from './actions/teachers';
 
 const drawerWidth = 240;
 
@@ -18,60 +21,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
-    toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: 36,
-    },
-    menuButtonHidden: {
-        display: 'none',
-    },
-    title: {
-        flexGrow: 1,
-    },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9),
-        },
-    },
+
     appBarSpacer: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
@@ -94,11 +44,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function StudentHome() {
-
-    const classes = useStyles();
+    const dispatch = useDispatch();
+    const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
+    const classes = useStyles();
+    const { teacher } = useSelector((st) => st.teacher);
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+    useEffect(() => {
+        dispatch(getTeacherInfo(user.teacher_username, token));
+    }, []);
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -107,22 +61,16 @@ export default function StudentHome() {
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-                        {/* Chart */}
-                        <Grid item xs={12} md={8} lg={9}>
+                        {/* user info */}
+                        <Grid item xs={12} sm={6} md={3}>
                             <Paper className={fixedHeightPaper}>
-
+                                <UserInfo title="Your info:" user={user} teacher={teacher} />
                             </Paper>
                         </Grid>
-                        {/* Recent Deposits */}
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-
-                            </Paper>
-                        </Grid>
-                        {/* Recent Orders */}
-                        <Grid item xs={12}>
+                        {/* Lessons */}
+                        <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-
+                                <LessonsList />
                             </Paper>
                         </Grid>
                     </Grid>

@@ -22,23 +22,25 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function TableList({ title, columns }) {
-    const { students } = useSelector((st) => st.students);
+export default function StudentsList() {
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
 
     const classes = useStyles();
+    const { students } = useSelector((st) => st.students);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getStudents(user.username, token));
     }, []);
     return (
         <React.Fragment>
-            <Title>{title}</Title>
+            <Title>Students</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
-                        {columns.map((c) => <TableCell>{c}</TableCell>)}
+                        <TableCell>Name</TableCell>
+                        <TableCell>Username</TableCell>
+                        <TableCell>Email</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

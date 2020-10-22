@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
-import TableList from './TableList';
+import StudentsList from './StudentsList';
 import UserInfo from "./UserInfo";
 
 const drawerWidth = 240;
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function StudentHome() {
-
+    const { user } = useSelector((st) => st.user);
     const classes = useStyles();
     const { token } = useSelector((st) => st.token);
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -59,13 +59,13 @@ export default function StudentHome() {
                         {/* user info */}
                         <Grid item xs={12} sm={6} md={3}>
                             <Paper className={fixedHeightPaper}>
-                                <UserInfo />
+                                <UserInfo title="Your info:" user={user} />
                             </Paper>
                         </Grid>
                         {/* Students */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <TableList title="Students" columns={["Name", "Username", "Email"]} />
+                                <StudentsList />
                             </Paper>
                         </Grid>
                     </Grid>

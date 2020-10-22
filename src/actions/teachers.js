@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_TOKEN, GET_USER, LOGOUT, GET_STUDENTS, ADD_STUDENT, REMOVE_STUDENT } from "./actionTypes";
+import { GET_TOKEN, GET_USER, LOGOUT, GET_STUDENTS, ADD_STUDENT, REMOVE_STUDENT, GET_TEACHER } from "./actionTypes";
 
 const BASE_URL = "http://localhost:5000/";
 
@@ -44,6 +44,21 @@ function getTeacher(username, _token) {
             alert(e.response.data.message);
         }
     };
+}
+function getTeacherInfo(username, _token) {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios.get(`${BASE_URL}teachers/${username}`, { params: { _token } });
+            dispatch(gotTeacherInfo(data.teacher));
+        }
+        catch (e) {
+            alert(e.response.data.message);
+        }
+    };
+}
+
+function gotTeacherInfo(teacher) {
+    return { type: GET_TEACHER, payload: teacher };
 }
 
 function editTeacher(username, edits, _token) {
@@ -120,4 +135,4 @@ function logout() {
 }
 
 
-export { loginTeacher, signUpTeacher, getTeacher, logout, editTeacher, getStudents, deleteTeacher, addStudent, removeStudent };
+export { loginTeacher, signUpTeacher, getTeacher, logout, editTeacher, getStudents, deleteTeacher, addStudent, removeStudent, getTeacherInfo };

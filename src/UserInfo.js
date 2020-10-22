@@ -24,12 +24,15 @@ const useStyles = makeStyles({
     },
 });
 
-export default function SimpleCard() {
-    const { user } = useSelector((st) => st.user);
+export default function UserInfo({ title, user, teacher }) {
+
     const classes = useStyles();
 
     return (
         <div>
+            <Typography variant="h5" component="h2">
+                {title}
+            </Typography>
             <Typography variant="h5" component="h2">
                 {user.full_name}
             </Typography>
@@ -42,6 +45,11 @@ export default function SimpleCard() {
             <CardActions>
                 <Button size="small">Edit</Button>
             </CardActions>
+            {teacher ? <Typography variant="body2" component="p">
+                Teacher: {teacher.username} <br />
+                    Teacher email: {teacher.email}
+                <br />
+            </Typography> : null}
         </div>
     );
 }
