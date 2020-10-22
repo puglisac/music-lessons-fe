@@ -45,7 +45,6 @@ export default function StudentsList() {
         dispatch(removeStudent(user.username, username, token));
     };
 
-    console.log(students);
 
     return (
         <React.Fragment>

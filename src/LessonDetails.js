@@ -16,6 +16,11 @@ import HomeworkList from './HomeworkList';
 import LessonsList from './LessonsList';
 import UserInfo from "./UserInfo";
 import { getTeacherInfo } from './actions/teachers';
+import AddHomworkForm from './AddHomeworkForm';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Popover from '@material-ui/core/Popover';
+import AddNoteForm from './AddNoteForm';
 
 const drawerWidth = 240;
 
@@ -43,9 +48,25 @@ const useStyles = makeStyles((theme) => ({
     fixedHeight: {
         height: 240,
     },
+    typography: {
+        padding: theme.spacing(2),
+    },
 }));
 
 export default function LessonDetails() {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
     const dispatch = useDispatch();
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
@@ -70,21 +91,63 @@ export default function LessonDetails() {
                                 <h4>Student: {lessons.student_username} </h4>
                             </Paper>
                         </Grid>
-                        {/* Lessons */}
+                        {/* notes */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
                                 <NotesList teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} />
                             </Paper>
+                            <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
+                                Add note
+                            </Button>
+                            <Popover
+                                id={id}
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleClose}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'center',
+                                }}
+                            >
+                                <Typography className={classes.typography}><AddNoteForm teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} /></Typography>
+                            </Popover>
+                        </Grid>
+                        {/* homework */}
+                        <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
                                 <HomeworkList teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} />
                             </Paper>
+                            <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
+                                Add homework
+                            </Button>
+                            <Popover
+                                id={id}
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleClose}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'center',
+                                }}
+                            >
+                                <Typography className={classes.typography}><AddHomworkForm teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} /></Typography>
+                            </Popover>
                         </Grid>
                     </Grid>
+
                     <Box pt={4}>
                         <Copyright />
                     </Box>
                 </Container>
             </main>
-        </div>
+        </div >
     );
 }

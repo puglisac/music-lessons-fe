@@ -28,9 +28,9 @@ export default function NotesList({ teacher_username, student_username, id }) {
     const { token } = useSelector((st) => st.token);
 
     const classes = useStyles();
-    const { notes } = useSelector((st) => st.notes);
+    const { homework } = useSelector((st) => st.homework);
     const dispatch = useDispatch();
-    const homework = useHistory();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getHomework(teacher_username, student_username, id, token));

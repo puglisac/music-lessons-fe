@@ -9,6 +9,10 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import { createLesson } from './actions/lessons';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
 import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
 import LessonsList from './LessonsList';
@@ -44,11 +48,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function StudentDetails() {
+
+
+
     const dispatch = useDispatch();
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
     const { students } = useSelector((st) => st.students);
 
+    const handleClick = (event) => {
+        dispatch(createLesson(user.username, students.username, token));
+    };
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     return (
@@ -71,6 +81,10 @@ export default function StudentDetails() {
                             <Paper className={classes.paper}>
                                 <LessonsList teacher_username={user.username} student_username={students.username} />
                             </Paper>
+                            <Button variant="contained" color="primary" onClick={handleClick}>
+                                Add lesson
+                            </Button>
+
                         </Grid>
                     </Grid>
                     <Box pt={4}>
