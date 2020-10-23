@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function StudentHome() {
+export default function TeacherHome() {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {

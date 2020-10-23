@@ -9,8 +9,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import Title from './Title';
-import { getHomework } from './actions/homework';
+import { deleteHomework, getHomework } from './actions/homework';
 import { useHistory } from "react-router-dom";
+import { editHomework } from "./actions/homework";
+import { Button } from '@material-ui/core';
 
 // Generate Order Data
 
@@ -24,16 +26,22 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function NotesList({ teacher_username, student_username, id }) {
+export default function HomeworkList({ teacher_username, student_username, lesson_id }) {
     const { token } = useSelector((st) => st.token);
 
     const classes = useStyles();
     const { homework } = useSelector((st) => st.homework);
     const dispatch = useDispatch();
     const history = useHistory();
+    const checkHomework = (id, completed) => {
+        dispatch(editHomework(teacher_username, student_username, lesson_id, id, { completed: !completed }, token));
+    };
+    const removeHomework = (id) => {
+        dispatch(deleteHomework(teacher_username, student_username, lesson_id, id, token));
+    };
 
     useEffect(() => {
-        dispatch(getHomework(teacher_username, student_username, id, token));
+        dispatch(getHomework(teacher_username, student_username, lesson_id, token));
     }, []);
     return (
         <React.Fragment>
@@ -49,10 +57,11 @@ export default function NotesList({ teacher_username, student_username, id }) {
                 <TableBody>
                     {Array.isArray(homework) ? homework.map((row) => (
                         <TableRow key={row.id}>
-                            <TableCell data-id={row.id}>{row.assignment}</TableCell>
-                            <TableCell data-id={row.id}><Checkbox value={row.completed ? true : false}
-                                color="primary"
-                            /></TableCell>
+                            <TableCell >{row.assignment}</TableCell>
+                            <TableCell >{row.completed ? null : <Button onClick={() => checkHomework(row.id, row.completed)}
+                            >Complete</Button>}</TableCell>
+                            <TableCell ><Button onClick={() => removeHomework(row.id)}
+                            >Delete</Button></TableCell>
                         </TableRow>
                     )) : null}
                 </TableBody>

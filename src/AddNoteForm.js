@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddHomworkForm({ teacher_username, student_username, id }) {
+export default function AddHomworkForm({ teacher_username, student_username, lesson_id }) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -52,7 +52,7 @@ export default function AddHomworkForm({ teacher_username, student_username, id 
         e.preventDefault();
         const { note } = formData;
         try {
-            dispatch(createNote(teacher_username, student_username, id, note, token));
+            dispatch(createNote(teacher_username, student_username, lesson_id, note, token));
             setFormData(initialState);
         } catch (e) {
             alert(e);

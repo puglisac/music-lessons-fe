@@ -61,10 +61,10 @@ function gotHomework(homework) {
     return { type: GET_HOMEWORK, payload: homework };
 }
 
-function editHomework(teacher_username, student_username, lesson_id, id, data, _token) {
+function editHomework(teacher_username, student_username, lesson_id, id, edits, _token) {
     return async function (dispatch) {
         try {
-            await axios.patch(`${BASE_URL}homework/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token, ...data });
+            await axios.patch(`${BASE_URL}homework/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token, ...edits });
             const { data } = await axios.get(`${BASE_URL}homework/${teacher_username}/${student_username}/${lesson_id}`, { params: { _token } });
             dispatch(gotHomework(data.homework));
         } catch (e) {

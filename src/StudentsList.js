@@ -36,10 +36,6 @@ export default function StudentsList() {
         dispatch(getStudents(user.username, token));
     }, [dispatch, user.username, token]);
 
-    const studentDetails = (e) => {
-        dispatch(getOneStudent(e.target.innerText, token));
-        history.push("/student");
-    };
 
     const deleteStudent = (username) => {
         dispatch(removeStudent(user.username, username, token));
@@ -60,7 +56,7 @@ export default function StudentsList() {
                 <TableBody>
                     {Array.isArray(students) ? students.map((row) => (
                         <TableRow key={row.username}>
-                            <TableCell><Link onClick={studentDetails}>{row.username}</Link></TableCell>
+                            <TableCell><Link href={`student/${row.username}`} > {row.username}</Link></TableCell>
                             <TableCell>{row.full_name}</TableCell>
                             <TableCell>{row.email}</TableCell>
                             <TableCell><Button onClick={() => deleteStudent(row.username)}>delete</Button></TableCell>

@@ -29,10 +29,10 @@ function Routes() {
                 <Route exact path="/login">
                     <LoginForm />
                 </Route>
-                <Route exact path="/student">
+                <Route exact path="/student/:student_username">
                     <StudentDetails />
                 </Route>
-                <Route exact path="/lesson">
+                <Route exact path="/lesson/:lesson_id">
                     <LessonDetails />
                 </Route>
             </Switch>

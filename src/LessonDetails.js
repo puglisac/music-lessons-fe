@@ -21,6 +21,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Popover from '@material-ui/core/Popover';
 import AddNoteForm from './AddNoteForm';
+import { getOneLesson } from './actions/lessons';
 
 const drawerWidth = 240;
 
@@ -63,18 +64,33 @@ export default function LessonDetails() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const [anchorEl2, setAnchorEl2] = React.useState(null);
+
+    const handleClick2 = (event) => {
+        setAnchorEl2(event.currentTarget);
+    };
+
+    const handleClose2 = () => {
+        setAnchorEl2(null);
+    };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+    const open2 = Boolean(anchorEl2);
+    const id = open ? 'note-popover' : undefined;
+    const id2 = open2 ? 'homework-popover' : undefined;
+
 
     const dispatch = useDispatch();
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
     const { students } = useSelector((st) => st.students);
     const { lessons } = useSelector((st) => st.lessons);
-
+    const { lesson_id } = useParams();
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    useEffect(() => {
+        dispatch(getOneLesson(students.teacher_username, students.username, lesson_id, token));
+    }, []);
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -94,7 +110,7 @@ export default function LessonDetails() {
                         {/* notes */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <NotesList teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} />
+                                <NotesList teacher_username={students.teacher_username} student_username={students.username} lesson_id={lesson_id} />
                             </Paper>
                             <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
                                 Add note
@@ -113,22 +129,22 @@ export default function LessonDetails() {
                                     horizontal: 'center',
                                 }}
                             >
-                                <Typography className={classes.typography}><AddNoteForm teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} /></Typography>
+                                <Typography className={classes.typography}><AddNoteForm teacher_username={lessons.teacher_username} student_username={lessons.student_username} lesson_id={lessons.id} /></Typography>
                             </Popover>
                         </Grid>
                         {/* homework */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <HomeworkList teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} />
+                                <HomeworkList teacher_username={students.teacher_username} student_username={students.username} lesson_id={lesson_id} />
                             </Paper>
-                            <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
+                            <Button aria-describedby={id2} variant="contained" color="primary" onClick={handleClick2}>
                                 Add homework
                             </Button>
                             <Popover
-                                id={id}
-                                open={open}
-                                anchorEl={anchorEl}
-                                onClose={handleClose}
+                                id={id2}
+                                open={open2}
+                                anchorEl={anchorEl2}
+                                onClose={handleClose2}
                                 anchorOrigin={{
                                     vertical: 'bottom',
                                     horizontal: 'center',
@@ -138,7 +154,7 @@ export default function LessonDetails() {
                                     horizontal: 'center',
                                 }}
                             >
-                                <Typography className={classes.typography}><AddHomworkForm teacher_username={lessons.teacher_username} student_username={lessons.student_username} id={lessons.id} /></Typography>
+                                <Typography className={classes.typography}><AddHomworkForm teacher_username={lessons.teacher_username} student_username={lessons.student_username} lesson_id={lessons.id} /></Typography>
                             </Popover>
                         </Grid>
                     </Grid>

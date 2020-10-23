@@ -57,7 +57,7 @@ function deleteNote(teacher_username, student_username, lesson_id, id, _token) {
 
 
 function gotNotes(notes) {
-    return { type: GET_NOTES, notes: notes };
+    return { type: GET_NOTES, payload: notes };
 }
 
 function editNote(teacher_username, student_username, lesson_id, id, data, _token) {

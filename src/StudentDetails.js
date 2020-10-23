@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
 import LessonsList from './LessonsList';
 import UserInfo from "./UserInfo";
-import { getTeacherInfo } from './actions/teachers';
+import { getOneStudent, getTeacherInfo } from './actions/teachers';
 
 const drawerWidth = 240;
 
@@ -55,8 +55,12 @@ export default function StudentDetails() {
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
     const { students } = useSelector((st) => st.students);
+    const { student_username } = useParams();
+    useEffect(() => {
+        dispatch(getOneStudent(student_username, token));
+    }, [dispatch]);
 
-    const handleClick = (event) => {
+    const handleClick = () => {
         dispatch(createLesson(user.username, students.username, token));
     };
     const classes = useStyles();
@@ -79,7 +83,7 @@ export default function StudentDetails() {
                         {/* Lessons */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <LessonsList teacher_username={user.username} student_username={students.username} />
+                                <LessonsList teacher_username={user.username} student_username={student_username} />
                             </Paper>
                             <Button variant="contained" color="primary" onClick={handleClick}>
                                 Add lesson

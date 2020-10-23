@@ -52,7 +52,7 @@ export default function LessonsList({ teacher_username, student_username }) {
                     {Array.isArray(lessons) ? lessons.map((row) => (
 
                         <TableRow key={row.id}>
-                            <Link onClick={lessonDetails}>
+                            <Link href={`/lesson/${row.id}`}>
                                 <TableCell data-id={row.id}>{row.date}</TableCell>
                             </Link>
                             <TableCell>{row.teacher_username}</TableCell>

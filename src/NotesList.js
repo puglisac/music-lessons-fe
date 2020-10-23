@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function NotesList({ teacher_username, student_username, id }) {
+export default function NotesList({ teacher_username, student_username, lesson_id }) {
     const { token } = useSelector((st) => st.token);
 
     const classes = useStyles();
@@ -32,7 +32,7 @@ export default function NotesList({ teacher_username, student_username, id }) {
     const history = useHistory();
 
     useEffect(() => {
-        dispatch(getNotes(teacher_username, student_username, id, token));
+        dispatch(getNotes(teacher_username, student_username, lesson_id, token));
     }, []);
     return (
         <React.Fragment>
