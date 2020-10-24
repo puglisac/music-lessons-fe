@@ -12,7 +12,7 @@ function loginTeacher(username, password) {
             dispatch(getTeacher(username, data.token));
         }
         catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -25,7 +25,7 @@ function signUpTeacher(username, password, full_name, email) {
             dispatch(getTeacher(username, data.token));
         }
         catch (e) {
-            console.log(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -90,6 +90,21 @@ function getStudents(username, _token) {
     };
 }
 
+function searchStudents(username, search, _token) {
+    return async function (dispatch) {
+        try {
+            const { data } = await axios.get(`${BASE_URL}teachers/${username}/students`, { params: { search, _token } });
+            console.log(data.students);
+            dispatch(gotStudents(data.students));
+        } catch (e) {
+            if (e.response.data.status === 404) {
+                dispatch(gotStudents([]));
+            } else { console.log(e); }
+        }
+
+    };
+}
+
 function getOneStudent(username, _token) {
     return async function (dispatch) {
         try {
@@ -108,7 +123,7 @@ function addStudent(teacher_username, student_username, _token) {
             const { data } = await axios.get(`${BASE_URL}teachers/${teacher_username}/students`, { params: { _token } });
             dispatch(gotStudents(data.students));
         } catch (e) {
-            alert(e);
+            alert(e.response.data.message);
         }
     };
 }
@@ -149,4 +164,4 @@ function logout() {
 }
 
 
-export { loginTeacher, signUpTeacher, getTeacher, logout, editTeacher, getStudents, deleteTeacher, addStudent, removeStudent, getTeacherInfo, getOneStudent };
+export { loginTeacher, signUpTeacher, getTeacher, logout, editTeacher, getStudents, deleteTeacher, addStudent, removeStudent, getTeacherInfo, getOneStudent, searchStudents };

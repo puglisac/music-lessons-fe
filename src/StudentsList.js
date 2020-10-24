@@ -7,9 +7,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-import { getStudents, removeStudent } from './actions/teachers';
+import { getStudents, removeStudent, searchStudents } from './actions/teachers';
 
 import AreYouSure from './AreYouSure';
+import FilterField from './FilterField';
 
 
 
@@ -27,11 +28,15 @@ export default function StudentsList() {
         dispatch(removeStudent(user.username, student, token));
     };
 
+    const search = async (text) => {
+        dispatch(searchStudents(user.username, text, token));
+    };
 
 
     return (
         <React.Fragment>
             <Title>Students</Title>
+            <FilterField search={search} />
             <Table size="small">
                 <TableHead>
                     <TableRow>

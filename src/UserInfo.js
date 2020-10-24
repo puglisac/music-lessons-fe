@@ -1,6 +1,6 @@
 import React from 'react';
 import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
+import EditUserButton from './EditUserButton';
 import Typography from '@material-ui/core/Typography';
 
 
@@ -22,7 +22,7 @@ export default function UserInfo({ title, user, teacher }) {
                 <br />
             </Typography>
             <CardActions>
-                <Button size="small">Edit</Button>
+                <EditUserButton />
             </CardActions>
             {teacher ? <Typography variant="body2" component="p">
                 Teacher: {teacher.username} <br />

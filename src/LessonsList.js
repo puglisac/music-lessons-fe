@@ -7,8 +7,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-import { deleteLesson, getLessons } from './actions/lessons';
+import { deleteLesson, getLessons, searchLessons } from './actions/lessons';
 import AreYouSure from './AreYouSure';
+import FilterField from './FilterField';
+
 
 
 
@@ -25,12 +27,17 @@ export default function LessonsList({ teacher_username, student_username }) {
         dispatch(deleteLesson(teacher_username, student_username, id, token));
     };
 
+    const search = async (text) => {
+        dispatch(searchLessons(teacher_username, student_username, text, token));
+    };
+
     useEffect(() => {
         dispatch(getLessons(teacher_username, student_username, token));
     }, [dispatch, student_username, teacher_username, token]);
     return (
         <React.Fragment>
             <Title>Lessons</Title>
+            <FilterField search={search} />
             <Table size="small">
                 <TableHead>
                     <TableRow>

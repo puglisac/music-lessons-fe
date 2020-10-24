@@ -9,8 +9,6 @@ function getLessons(teacher_username, student_username, _token) {
         try {
 
             const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { params: { _token } });
-            console.log(data);
-
             dispatch(gotLessons(data.lessons));
         }
         catch (e) {
@@ -19,6 +17,24 @@ function getLessons(teacher_username, student_username, _token) {
             } else { console.log(e); }
 
         }
+    };
+}
+
+function searchLessons(teacher_username, student_username, search, _token) {
+    return async function (dispatch) {
+
+        try {
+
+            const { data } = await axios.get(`${BASE_URL}lessons/${teacher_username}/${student_username}`, { params: { search, _token } });
+            dispatch(gotLessons(data.lessons));
+        }
+        catch (e) {
+            if (e.response.data.status === 404) {
+                dispatch(gotLessons([]));
+            } else { console.log(e); }
+
+        }
+
     };
 }
 
@@ -82,4 +98,4 @@ function editLesson(teacher_username, student_username, id, edits, _token) {
     };
 }
 
-export { getLessons, getOneLesson, editLesson, deleteLesson, createLesson };
+export { getLessons, getOneLesson, editLesson, deleteLesson, createLesson, searchLessons };

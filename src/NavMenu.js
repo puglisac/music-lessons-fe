@@ -10,7 +10,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Button } from '@material-ui/core';
+import { Home, MusicNote, LocalLibrary } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+
 
 
 const useStyles = makeStyles({
@@ -22,13 +25,14 @@ const useStyles = makeStyles({
     },
 });
 
+function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+}
+
 export default function SwipeableTemporaryDrawer() {
     const classes = useStyles();
     const [state, setState] = React.useState({
-        top: false,
-        left: false,
-        bottom: false,
-        right: false,
+        left: false
     });
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -49,21 +53,21 @@ export default function SwipeableTemporaryDrawer() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItemLink href="/" button >
+                    <ListItemIcon><Home /></ListItemIcon>
+                    <ListItemText primary="Dashboard" />
+                </ListItemLink>
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItemLink href="https://www.imusic-school.com/en/tools/online-metronome/" target="_blank" button >
+                    <ListItemIcon><MusicNote /></ListItemIcon>
+                    <ListItemText primary="Metronome" />
+                </ListItemLink>
+                <ListItemLink href="https://www.musictheory.net/lessons" target="_blank" button >
+                    <ListItemIcon><LocalLibrary /></ListItemIcon>
+                    <ListItemText primary="Music Theory" />
+                </ListItemLink>
             </List>
         </div>
     );
