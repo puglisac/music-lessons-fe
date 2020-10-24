@@ -50,9 +50,10 @@ export default function HomeworkList({ teacher_username, student_username, lesso
                         <TableRow key={row.id}>
                             <TableCell >{row.assignment}</TableCell>
                             <TableCell >{row.completed ? "Yes" : <Button onClick={() => checkHomework(row.id, row.completed)}
-                            >Complete</Button>}</TableCell>
-                            <TableCell ><Button onClick={() => removeHomework(row.id)}
-                            >Delete</Button></TableCell>
+                            >Complete</Button>}
+                            </TableCell>
+                            {user.is_teacher ? <TableCell ><Button onClick={() => removeHomework(row.id)}
+                            >Delete</Button></TableCell> : null}
                         </TableRow>
                     )) : null}
                 </TableBody>

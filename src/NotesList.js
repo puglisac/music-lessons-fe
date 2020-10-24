@@ -41,8 +41,8 @@ export default function NotesList({ teacher_username, student_username, lesson_i
                     {Array.isArray(notes) ? notes.map((row) => (
                         <TableRow key={row.id}>
                             <TableCell data-id={row.id}>{row.note}</TableCell>
-                            <TableCell ><Button onClick={() => removeNote(row.id)}
-                            >Delete</Button></TableCell>
+                            {user.is_teacher ? <TableCell ><Button onClick={() => removeNote(row.id)}
+                            >Delete</Button></TableCell> : null}
                         </TableRow>
                     )) : null}
                 </TableBody>
