@@ -1,42 +1,33 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-import { getLessons, getOneLesson } from './actions/lessons';
-import { useHistory } from "react-router-dom";
-
-// Generate Order Data
-
-
-
-const useStyles = makeStyles((theme) => ({
-    seeMore: {
-        marginTop: theme.spacing(3),
-    },
-}));
+import { deleteLesson, getLessons } from './actions/lessons';
+import AreYouSure from './AreYouSure';
 
 
 
 export default function LessonsList({ teacher_username, student_username }) {
     const { token } = useSelector((st) => st.token);
 
-    const classes = useStyles();
     const { lessons } = useSelector((st) => st.lessons);
+    const { user } = useSelector((st) => st.user);
+
     const dispatch = useDispatch();
-    const history = useHistory();
-    const lessonDetails = (e) => {
-        dispatch(getOneLesson(teacher_username, student_username, e.target.dataset.id, token));
-        history.push("/lesson");
+
+
+    const removeLesson = (id) => {
+        dispatch(deleteLesson(teacher_username, student_username, id, token));
     };
+
     useEffect(() => {
         dispatch(getLessons(teacher_username, student_username, token));
-    }, []);
+    }, [dispatch, student_username, teacher_username, token]);
     return (
         <React.Fragment>
             <Title>Lessons</Title>
@@ -57,6 +48,7 @@ export default function LessonsList({ teacher_username, student_username }) {
                             </Link>
                             <TableCell>{row.teacher_username}</TableCell>
                             <TableCell>{row.student_username}</TableCell>
+                            {user.is_teacher ? <TableCell><AreYouSure type="lesson" id={row.id} removeFunction={removeLesson} /></TableCell> : null}
                         </TableRow>
                     )) : null}
                 </TableBody>

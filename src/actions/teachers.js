@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_TOKEN, GET_USER, LOGOUT, GET_STUDENTS, ADD_STUDENT, REMOVE_STUDENT, GET_TEACHER } from "./actionTypes";
+import { GET_TOKEN, GET_USER, LOGOUT, GET_STUDENTS, GET_TEACHER } from "./actionTypes";
 
 const BASE_URL = "http://localhost:5000/";
 
@@ -82,8 +82,11 @@ function getStudents(username, _token) {
             const { data } = await axios.get(`${BASE_URL}teachers/${username}/students`, { params: { _token } });
             dispatch(gotStudents(data.students));
         } catch (e) {
-            console.log(e);
+            if (e.response.data.status === 404) {
+                dispatch(gotStudents([]));
+            } else { console.log(e); }
         }
+
     };
 }
 
@@ -118,8 +121,11 @@ function removeStudent(teacher_username, student_username, _token) {
             const { data } = await axios.get(`${BASE_URL}teachers/${teacher_username}/students`, { params: { _token } });
             dispatch(gotStudents(data.students));
         } catch (e) {
-            alert(e);
+            if (e.response.data.status === 404) {
+                dispatch(gotStudents([]));
+            } else { console.log(e); }
         }
+
     };
 }
 

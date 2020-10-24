@@ -1,4 +1,4 @@
-import { GET_LESSONS, ADD_LESSON, REMOVE_LESSON, LOGOUT } from "../actions/actionTypes";
+import { GET_LESSONS, LOGOUT } from "../actions/actionTypes";
 
 export default function lessons(state = {}, action) {
     switch (action.type) {

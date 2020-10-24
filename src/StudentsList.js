@@ -1,45 +1,32 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-import { getStudents, getOneStudent, removeStudent } from './actions/teachers';
-import { useHistory } from "react-router-dom";
-import { Button } from '@material-ui/core';
+import { getStudents, removeStudent } from './actions/teachers';
 
-// Generate Order Data
-
-
-
-const useStyles = makeStyles((theme) => ({
-    seeMore: {
-        marginTop: theme.spacing(3),
-    },
-}));
+import AreYouSure from './AreYouSure';
 
 
 
 export default function StudentsList() {
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
-    const classes = useStyles();
     const { students } = useSelector((st) => st.students);
-    const history = useHistory();
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getStudents(user.username, token));
     }, [dispatch, user.username, token]);
 
-
-    const deleteStudent = (username) => {
-        dispatch(removeStudent(user.username, username, token));
+    const deleteStudent = (student) => {
+        dispatch(removeStudent(user.username, student, token));
     };
+
 
 
     return (
@@ -59,7 +46,7 @@ export default function StudentsList() {
                             <TableCell><Link href={`student/${row.username}`} > {row.username}</Link></TableCell>
                             <TableCell>{row.full_name}</TableCell>
                             <TableCell>{row.email}</TableCell>
-                            <TableCell><Button onClick={() => deleteStudent(row.username)}>delete</Button></TableCell>
+                            <TableCell><AreYouSure type={row.username} id={row.username} removeFunction={deleteStudent} /></TableCell>
 
                         </TableRow>
                     )) : null}

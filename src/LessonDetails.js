@@ -13,17 +13,9 @@ import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
 import NotesList from './NotesList';
 import HomeworkList from './HomeworkList';
-import LessonsList from './LessonsList';
-import UserInfo from "./UserInfo";
-import { getTeacherInfo } from './actions/teachers';
-import AddHomworkForm from './AddHomeworkForm';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Popover from '@material-ui/core/Popover';
-import AddNoteForm from './AddNoteForm';
 import { getOneLesson } from './actions/lessons';
-
-const drawerWidth = 240;
+import AddHomeworkButton from './AddHomeworkButton';
+import AddNoteButton from "./AddNoteButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,30 +47,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LessonDetails() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const [anchorEl2, setAnchorEl2] = React.useState(null);
-
-    const handleClick2 = (event) => {
-        setAnchorEl2(event.currentTarget);
-    };
-
-    const handleClose2 = () => {
-        setAnchorEl2(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const open2 = Boolean(anchorEl2);
-    const id = open ? 'note-popover' : undefined;
-    const id2 = open2 ? 'homework-popover' : undefined;
-
 
     const dispatch = useDispatch();
     const { user } = useSelector((st) => st.user);
@@ -87,10 +55,18 @@ export default function LessonDetails() {
     const { lessons } = useSelector((st) => st.lessons);
     const { lesson_id } = useParams();
     const classes = useStyles();
+
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+    let teacher_username;
+    teacher_username = students ? students.teacher_username : user.teacher_username;
+
+    let student_username;
+    student_username = students ? students.username : user.username;
+
     useEffect(() => {
-        dispatch(getOneLesson(students.teacher_username, students.username, lesson_id, token));
-    }, []);
+        dispatch(getOneLesson(teacher_username, student_username, lesson_id, token));
+    }, [dispatch, lesson_id, student_username, teacher_username, token]);
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -110,52 +86,16 @@ export default function LessonDetails() {
                         {/* notes */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <NotesList teacher_username={students.teacher_username} student_username={students.username} lesson_id={lesson_id} />
+                                <NotesList teacher_username={teacher_username} student_username={student_username} lesson_id={lesson_id} />
                             </Paper>
-                            <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
-                                Add note
-                            </Button>
-                            <Popover
-                                id={id}
-                                open={open}
-                                anchorEl={anchorEl}
-                                onClose={handleClose}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'center',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'center',
-                                }}
-                            >
-                                <Typography className={classes.typography}><AddNoteForm teacher_username={lessons.teacher_username} student_username={lessons.student_username} lesson_id={lessons.id} /></Typography>
-                            </Popover>
+                            {user.is_teacher ? <AddNoteButton /> : null}
                         </Grid>
                         {/* homework */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <HomeworkList teacher_username={students.teacher_username} student_username={students.username} lesson_id={lesson_id} />
+                                <HomeworkList teacher_username={teacher_username} student_username={student_username} lesson_id={lesson_id} />
                             </Paper>
-                            <Button aria-describedby={id2} variant="contained" color="primary" onClick={handleClick2}>
-                                Add homework
-                            </Button>
-                            <Popover
-                                id={id2}
-                                open={open2}
-                                anchorEl={anchorEl2}
-                                onClose={handleClose2}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'center',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'center',
-                                }}
-                            >
-                                <Typography className={classes.typography}><AddHomworkForm teacher_username={lessons.teacher_username} student_username={lessons.student_username} lesson_id={lessons.id} /></Typography>
-                            </Popover>
+                            {user.is_teacher ? <AddHomeworkButton /> : null}
                         </Grid>
                     </Grid>
 

@@ -1,4 +1,4 @@
-import { GET_NOTES, ADD_NOTE, REMOVE_NOTE, LOGOUT } from "../actions/actionTypes";
+import { GET_NOTES, LOGOUT } from "../actions/actionTypes";
 
 export default function notes(state = {}, action) {
     switch (action.type) {

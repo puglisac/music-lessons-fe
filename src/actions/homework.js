@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_HOMEWORK, ADD_HOMEWORK, REMOVE_HOMEWORK } from "./actionTypes";
+import { GET_HOMEWORK } from "./actionTypes";
 
 const BASE_URL = "http://localhost:5000/";
 
@@ -11,7 +11,9 @@ function getHomework(teacher_username, student_username, lesson_id, _token) {
             dispatch(gotHomework(data.homework));
         }
         catch (e) {
-            console.log(e);
+            if (e.response.data.status === 404) {
+                dispatch(gotHomework([]));
+            } else { console.log(e); }
         }
     };
 }
@@ -46,12 +48,14 @@ function createHomework(teacher_username, student_username, lesson_id, assignmen
 function deleteHomework(teacher_username, student_username, lesson_id, id, _token) {
     return async function (dispatch) {
         try {
-            await axios.delete(`${BASE_URL}homework/${teacher_username}/${student_username}/${lesson_id}/${id}`, { _token });
+            await axios.delete(`${BASE_URL}homework/${teacher_username}/${student_username}/${lesson_id}/${id}`, { params: { _token } });
             const { data } = await axios.get(`${BASE_URL}homework/${teacher_username}/${student_username}/${lesson_id}`, { params: { _token } });
             dispatch(gotHomework(data.homework));
         }
         catch (e) {
-            console.log(e);
+            if (e.response.data.status === 404) {
+                dispatch(gotHomework([]));
+            } else { console.log(e); }
         }
     };
 }
@@ -68,7 +72,9 @@ function editHomework(teacher_username, student_username, lesson_id, id, edits, 
             const { data } = await axios.get(`${BASE_URL}homework/${teacher_username}/${student_username}/${lesson_id}`, { params: { _token } });
             dispatch(gotHomework(data.homework));
         } catch (e) {
-            console.log(e);
+            if (e.response.data.status === 404) {
+                dispatch(gotHomework([]));
+            } else { console.log(e); }
         }
     };
 }

@@ -1,4 +1,4 @@
-import { GET_HOMEWORK, ADD_HOMEWORK, REMOVE_HOMEWORK, LOGOUT } from "../actions/actionTypes";
+import { GET_HOMEWORK, LOGOUT } from "../actions/actionTypes";
 
 export default function homework(state = {}, action) {
     switch (action.type) {

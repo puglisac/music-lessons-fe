@@ -9,13 +9,11 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
 import LessonsList from './LessonsList';
 import UserInfo from "./UserInfo";
 import { getTeacherInfo } from './actions/teachers';
 
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,9 +48,11 @@ export default function StudentHome() {
     const classes = useStyles();
     const { teacher } = useSelector((st) => st.teacher);
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
     useEffect(() => {
         dispatch(getTeacherInfo(user.teacher_username, token));
-    }, []);
+    }, [dispatch, user.teacher_username, token]);
+
     return (
         <div className={classes.root}>
             <CssBaseline />

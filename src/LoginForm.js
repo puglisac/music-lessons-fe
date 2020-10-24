@@ -14,9 +14,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from './Copyright';
 import { useHistory } from 'react-router-dom';
-import { getStudent, loginStudent } from "./actions/students";
-import { loginTeacher, getTeacher } from "./actions/teachers";
-import { useDispatch, useSelector } from "react-redux";
+import { loginStudent } from "./actions/students";
+import { loginTeacher } from "./actions/teachers";
+import { useDispatch } from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { token } = useSelector((st) => st.token);
     const history = useHistory();
 
     const initialState = {

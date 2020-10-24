@@ -11,15 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { createLesson } from './actions/lessons';
-import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
 import LessonsList from './LessonsList';
-import UserInfo from "./UserInfo";
-import { getOneStudent, getTeacherInfo } from './actions/teachers';
+import { getOneStudent } from './actions/teachers';
 
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,15 +53,18 @@ export default function StudentDetails() {
     const { token } = useSelector((st) => st.token);
     const { students } = useSelector((st) => st.students);
     const { student_username } = useParams();
+
     useEffect(() => {
         dispatch(getOneStudent(student_username, token));
-    }, [dispatch]);
+    }, [dispatch, student_username, token]);
 
     const handleClick = () => {
         dispatch(createLesson(user.username, students.username, token));
     };
+
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -76,6 +76,9 @@ export default function StudentDetails() {
                         {/* student info */}
                         <Grid item xs={12} sm={6} md={3}>
                             <Paper className={fixedHeightPaper}>
+                                <Typography variant="h5" component="h2">
+                                    Student:
+                                </Typography>
                                 <h2>{students.username}</h2>
                                 <h4>{students.email} </h4>
                             </Paper>

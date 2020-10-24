@@ -13,9 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from './Copyright';
-import { useDispatch, useSelector } from "react-redux";
-import { getTeacher, signUpTeacher } from "./actions/teachers";
-import { signUpStudent, getStudent } from "./actions/students";
+import { useDispatch } from "react-redux";
+import { signUpTeacher } from "./actions/teachers";
+import { signUpStudent } from "./actions/students";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { token } = useSelector((st) => st.token);
     const history = useHistory();
     const initialState = {
         username: "",

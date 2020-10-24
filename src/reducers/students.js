@@ -1,4 +1,4 @@
-import { GET_STUDENTS, ADD_STUDENT, REMOVE_STUDENT, LOGOUT } from "../actions/actionTypes";
+import { GET_STUDENTS, LOGOUT } from "../actions/actionTypes";
 
 export default function students(state = {}, action) {
     switch (action.type) {
