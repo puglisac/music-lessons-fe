@@ -1,7 +1,5 @@
 import axios from "axios";
-import { GET_LESSONS } from "./actionTypes";
-
-const BASE_URL = "http://localhost:5000/";
+import { GET_LESSONS, BASE_URL } from "./actionTypes";
 
 // gets lessons from teacher username and student username and sets lesson state to response
 function getLessons(teacher_username, student_username, _token) {

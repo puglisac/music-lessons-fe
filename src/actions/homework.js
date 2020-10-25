@@ -1,7 +1,7 @@
 import axios from "axios";
-import { GET_HOMEWORK } from "./actionTypes";
+import { GET_HOMEWORK, BASE_URL } from "./actionTypes";
 
-const BASE_URL = "http://localhost:5000/";
+
 
 // gets homework by lesson id, teacher username, student username and sets homework state to response
 function getHomework(teacher_username, student_username, lesson_id, _token) {

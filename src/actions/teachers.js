@@ -1,7 +1,6 @@
 import axios from "axios";
-import { GET_TOKEN, GET_USER, LOGOUT, GET_STUDENTS, GET_TEACHER } from "./actionTypes";
+import { GET_TOKEN, GET_USER, LOGOUT, GET_STUDENTS, GET_TEACHER, BASE_URL } from "./actionTypes";
 
-const BASE_URL = "http://localhost:5000/";
 
 // login a teacher, update token state and get teacher by username
 function loginTeacher(username, password) {

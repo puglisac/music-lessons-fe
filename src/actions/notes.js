@@ -1,7 +1,5 @@
 import axios from "axios";
-import { GET_NOTES } from "./actionTypes";
-
-const BASE_URL = "http://localhost:5000/";
+import { GET_NOTES, BASE_URL } from "./actionTypes";
 
 // get notes for lesson by id, teacher username, and student username and set notes state to response
 function getNotes(teacher_username, student_username, lesson_id, _token) {

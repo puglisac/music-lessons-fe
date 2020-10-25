@@ -14,7 +14,7 @@ import Container from '@material-ui/core/Container';
 import { deleteTeacher, editTeacher } from "./actions/teachers";
 import { deleteStudent, editStudent } from "./actions/students";
 import AreYouSure from './AreYouSure';
-
+import { BASE_URL } from "./actions/actionTypes";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -42,7 +42,6 @@ export default function EditUserForm({ close }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const BASE_URL = "http://localhost:5000/";
 
     const initialState = {
         username: user.username,
