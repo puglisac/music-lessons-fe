@@ -3,9 +3,9 @@ import { GET_TOKEN, GET_USER, LOGOUT } from "./actionTypes";
 
 const BASE_URL = "http://localhost:5000/";
 
+// login a student and update token state and get student by username
 function loginStudent(username, password) {
     return async function (dispatch) {
-
         try {
             const { data } = await axios.post(`${BASE_URL}students/login`, { username, password });
             dispatch(gotToken(data.token));
@@ -17,6 +17,7 @@ function loginStudent(username, password) {
     };
 }
 
+// signup a student and update token state and get student by username
 function signUpStudent(username, password, full_name, email) {
     return async function (dispatch) {
         try {
@@ -34,10 +35,10 @@ function gotToken(token) {
     return { type: GET_TOKEN, payload: token };
 }
 
+// get a student by username and update user state
 function getStudent(username, _token) {
     return async function (dispatch) {
         try {
-            console.log(_token);
             const { data } = await axios.get(`${BASE_URL}students/${username}`, { params: { _token } });
             dispatch(gotStudent(data.student));
         }
@@ -47,6 +48,7 @@ function getStudent(username, _token) {
     };
 }
 
+// edit student info and get student by username
 function editStudent(username, edits, _token) {
     return async function (dispatch) {
         try {
@@ -58,13 +60,11 @@ function editStudent(username, edits, _token) {
     };
 }
 
-function gotStudent(student) {
-    return { type: GET_USER, payload: student };
-}
+// delete a student and logout user
 function deleteStudent(username, _token) {
     return async function (dispatch) {
         try {
-            await axios.delete(`${BASE_URL}students/${username}/`, { _token });
+            await axios.delete(`${BASE_URL}students/${username}/`, { params: { _token } });
             dispatch(logout());
         } catch (e) {
             alert(e.response.data.message);
@@ -72,6 +72,11 @@ function deleteStudent(username, _token) {
     };
 }
 
+function gotStudent(student) {
+    return { type: GET_USER, payload: student };
+}
+
+// logout user
 function logout() {
     return { type: LOGOUT };
 }

@@ -30,10 +30,10 @@ function Routes() {
                     <LoginForm />
                 </Route>
                 <Route exact path="/student/:student_username">
-                    <StudentDetails />
+                    {user ? <StudentDetails /> : <Redirect to="/" />}
                 </Route>
                 <Route exact path="/lesson/:lesson_id">
-                    <LessonDetails />
+                    {user ? <LessonDetails /> : <Redirect to="/" />}
                 </Route>
             </Switch>
         </div>

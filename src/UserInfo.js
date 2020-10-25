@@ -1,11 +1,9 @@
 import React from 'react';
 import CardActions from '@material-ui/core/CardActions';
-import EditUserButton from './EditUserButton';
 import Typography from '@material-ui/core/Typography';
-
+import EditUserButton from './EditUserButton';
 
 export default function UserInfo({ title, user, teacher }) {
-
 
     return (
         <div>

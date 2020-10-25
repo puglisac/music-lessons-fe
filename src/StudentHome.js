@@ -45,8 +45,9 @@ export default function StudentHome() {
     const dispatch = useDispatch();
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
-    const classes = useStyles();
     const { teacher } = useSelector((st) => st.teacher);
+
+    const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     useEffect(() => {
@@ -70,7 +71,9 @@ export default function StudentHome() {
                         {/* Lessons */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <LessonsList teacher_username={user.teacher_username} student_username={user.username} />
+                                <LessonsList
+                                    teacher_username={user.teacher_username}
+                                    student_username={user.username} />
                             </Paper>
                         </Grid>
                     </Grid>

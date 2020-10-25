@@ -16,7 +16,6 @@ import FilterField from './FilterField';
 
 export default function LessonsList({ teacher_username, student_username }) {
     const { token } = useSelector((st) => st.token);
-
     const { lessons } = useSelector((st) => st.lessons);
     const { user } = useSelector((st) => st.user);
 
@@ -34,10 +33,11 @@ export default function LessonsList({ teacher_username, student_username }) {
     useEffect(() => {
         dispatch(getLessons(teacher_username, student_username, token));
     }, [dispatch, student_username, teacher_username, token]);
+
     return (
         <React.Fragment>
             <Title>Lessons</Title>
-            <FilterField search={search} />
+            <FilterField search={search} format="MM/DD/YYYY" />
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -50,12 +50,14 @@ export default function LessonsList({ teacher_username, student_username }) {
                     {Array.isArray(lessons) ? lessons.map((row) => (
 
                         <TableRow key={row.id}>
-                            <Link href={`/lesson/${row.id}`}>
-                                <TableCell data-id={row.id}>{row.date}</TableCell>
-                            </Link>
+                            <TableCell >
+                                <Link href={`/lesson/${row.id}`}>{new Date(row.date).toLocaleDateString()}</Link>
+                            </TableCell>
                             <TableCell>{row.teacher_username}</TableCell>
                             <TableCell>{row.student_username}</TableCell>
-                            {user.is_teacher ? <TableCell><AreYouSure type="lesson" id={row.id} removeFunction={removeLesson} /></TableCell> : null}
+                            {user.is_teacher ? <TableCell><AreYouSure
+                                type="lesson" id={row.id}
+                                removeFunction={removeLesson} /></TableCell> : null}
                         </TableRow>
                     )) : null}
                 </TableBody>

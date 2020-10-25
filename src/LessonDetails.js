@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +10,6 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
 import NotesList from './NotesList';
 import HomeworkList from './HomeworkList';
@@ -67,6 +67,9 @@ export default function LessonDetails() {
     useEffect(() => {
         dispatch(getOneLesson(teacher_username, student_username, lesson_id, token));
     }, [dispatch, lesson_id, student_username, teacher_username, token]);
+
+
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -78,7 +81,7 @@ export default function LessonDetails() {
                         {/* student info */}
                         <Grid item xs={12} sm={6} md={3}>
                             <Paper className={fixedHeightPaper}>
-                                <h2>Date: {lessons.date}</h2>
+                                <h2>Date: {new Date(lessons.date).toLocaleDateString()}</h2>
                                 <h4>Teacher: {lessons.teacher_username} </h4>
                                 <h4>Student: {lessons.student_username} </h4>
                             </Paper>
@@ -86,14 +89,18 @@ export default function LessonDetails() {
                         {/* notes */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <NotesList teacher_username={teacher_username} student_username={student_username} lesson_id={lesson_id} />
+                                <NotesList teacher_username={teacher_username}
+                                    student_username={student_username}
+                                    lesson_id={lesson_id} />
                             </Paper>
                             {user.is_teacher ? <AddNoteButton /> : null}
                         </Grid>
                         {/* homework */}
                         <Grid item xs={12} md={9}>
                             <Paper className={classes.paper}>
-                                <HomeworkList teacher_username={teacher_username} student_username={student_username} lesson_id={lesson_id} />
+                                <HomeworkList teacher_username={teacher_username}
+                                    student_username={student_username}
+                                    lesson_id={lesson_id} />
                             </Paper>
                             {user.is_teacher ? <AddHomeworkButton /> : null}
                         </Grid>

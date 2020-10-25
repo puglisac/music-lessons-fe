@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import { getStudents, removeStudent, searchStudents } from './actions/teachers';
-
 import AreYouSure from './AreYouSure';
 import FilterField from './FilterField';
 
@@ -32,7 +31,6 @@ export default function StudentsList() {
         dispatch(searchStudents(user.username, text, token));
     };
 
-
     return (
         <React.Fragment>
             <Title>Students</Title>
@@ -51,8 +49,11 @@ export default function StudentsList() {
                             <TableCell><Link href={`student/${row.username}`} > {row.username}</Link></TableCell>
                             <TableCell>{row.full_name}</TableCell>
                             <TableCell>{row.email}</TableCell>
-                            <TableCell><AreYouSure type={row.username} id={row.username} removeFunction={deleteStudent} /></TableCell>
-
+                            <TableCell><AreYouSure
+                                type={row.username}
+                                id={row.username}
+                                removeFunction={deleteStudent} />
+                            </TableCell>
                         </TableRow>
                     )) : null}
                 </TableBody>

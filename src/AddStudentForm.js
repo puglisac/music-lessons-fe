@@ -1,8 +1,8 @@
-import Button from '@material-ui/core/Button';
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 import { addStudent } from './actions/teachers';
 
 
@@ -26,6 +26,7 @@ export default function AddStudentForm({ teacher_username }) {
     const initialState = {
         username: "",
     };
+
     const [formData, setFormData] = useState(initialState);
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -45,6 +46,7 @@ export default function AddStudentForm({ teacher_username }) {
             alert(e);
         }
     };
+
     return (
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField
@@ -60,7 +62,11 @@ export default function AddStudentForm({ teacher_username }) {
                 value={formData.username}
                 onChange={handleChange}
             />
-            <Button type="submit" className={classes.submit} variant="contained" >Add</Button>
+            <Button type="submit"
+                className={classes.submit}
+                variant="contained" >
+                Add
+            </Button>
         </form>
     );
 }

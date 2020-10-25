@@ -7,7 +7,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import NavMenu from './NavMenu';
-import Link from '@material-ui/core/Link';
 import { logout } from './actions/teachers';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,11 +35,17 @@ export default function ButtonAppBar() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <NavMenu edge="start" className={classes.menuButton} color="inherit" aria-label="menu" />
+                    <NavMenu edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="menu" />
                     <Typography variant="h6" className={classes.title}>
-                        <Link href="/" color="inherit">Music Lessons</Link>
+                        <Button href="/" color="inherit">Music Lessons</Button>
                     </Typography>
-                    {token ? <Button onClick={logoutUser} color="inherit">Logout</Button> : <Button href="login" color="inherit">Login</Button>}
+                    {token ? <Button onClick={logoutUser}
+                        color="inherit">Logout</Button> :
+                        <Button href="login"
+                            color="inherit">Login</Button>}
                 </Toolbar>
             </AppBar>
         </div>

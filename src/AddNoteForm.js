@@ -1,8 +1,8 @@
-import Button from '@material-ui/core/Button';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import Button from '@material-ui/core/Button';
 import { createNote } from './actions/notes';
 
 
@@ -62,7 +62,11 @@ export default function AddHomworkForm({ teacher_username, student_username, les
                 value={formData.note}
                 onChange={handleChange}
             />
-            <Button type="submit" className={classes.submit} variant="contained" >Add</Button>
+            <Button type="submit"
+                className={classes.submit}
+                variant="contained" >
+                Add
+            </Button>
         </form>
     );
 }

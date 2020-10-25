@@ -12,9 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Copyright from './Copyright';
 import StudentsList from './StudentsList';
 import UserInfo from "./UserInfo";
-
 import AddStudentButton from './AddStudentButton';
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,7 +50,6 @@ export default function TeacherHome() {
     return (
         <div className={classes.root}>
             <CssBaseline />
-
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>

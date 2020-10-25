@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import { Redirect, useParams } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,13 +11,11 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { createLesson } from './actions/lessons';
 import Typography from '@material-ui/core/Typography';
-import { useParams } from "react-router-dom";
 import Copyright from './Copyright';
 import LessonsList from './LessonsList';
 import { getOneStudent } from './actions/teachers';
-
+import { createLesson } from './actions/lessons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,8 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StudentDetails() {
 
-
-
     const dispatch = useDispatch();
     const { user } = useSelector((st) => st.user);
     const { token } = useSelector((st) => st.token);
@@ -64,6 +61,14 @@ export default function StudentDetails() {
 
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+    if (!Array.isArray(students)) {
+        if (students.teacher_username != user.username) {
+            return (
+                <Redirect to="/" />
+            );
+        }
+    }
 
     return (
         <div className={classes.root}>

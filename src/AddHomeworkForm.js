@@ -1,15 +1,14 @@
-import Button from '@material-ui/core/Button';
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 import { createHomework } from './actions/homework';
-
 
 const useStyles = makeStyles((theme) => ({
 
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -47,6 +46,7 @@ export default function AddHomworkForm({ teacher_username, student_username, les
             alert(e);
         }
     };
+
     return (
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField

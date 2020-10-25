@@ -59,7 +59,10 @@ export default function AreYouSure({ type, id, removeFunction }) {
 
     return (
         <div>
-            <Button onClick={handleOpen}>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleOpen}>
                 Delete
       </Button>
             <Modal

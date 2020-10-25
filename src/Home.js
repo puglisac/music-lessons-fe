@@ -34,27 +34,23 @@ export default function MediaCard() {
             <div className={classes.paper}>
                 <Card className={classes.root}>
                     <CardActionArea>
-                        <CardMedia
-                            className={classes.media}
-                            image="home_img.jpg"
-                            title="music teacher"
-                        />
+                        <div id="image" />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
                                 Welcome to Music Lessons
-          </Typography>
+                            </Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
                                 Music Lessons is a tool for private lesson teachers and students.  Create an account or login to get started!
-          </Typography>
+                            </Typography>
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
                         <Button href="/login" size="small" color="primary">
                             Login
-        </Button>
+                        </Button>
                         <Button href="/signup" size="small" color="primary">
                             Signup
-        </Button>
+                        </Button>
                     </CardActions>
                 </Card>
             </div>

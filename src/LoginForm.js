@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,12 +14,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Paper } from '@material-ui/core';
 import Copyright from './Copyright';
-import { useHistory } from 'react-router-dom';
 import { loginStudent } from "./actions/students";
 import { loginTeacher } from "./actions/teachers";
-import { useDispatch } from "react-redux";
-
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        padding: '10px'
     },
     avatar: {
         margin: theme.spacing(1),
@@ -58,10 +59,15 @@ export default function SignIn() {
         }));
     };
 
+    const [isTeacher, setIsTeacher] = useState(false);
+    const handleTeacher = (e) => {
+        setIsTeacher(e.target.checked);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const { username, password, teacher } = formData;
-        if (teacher) {
+        if (isTeacher) {
             try {
                 dispatch(loginTeacher(username, password));
                 history.push("/");
@@ -71,7 +77,6 @@ export default function SignIn() {
         } else {
             try {
                 dispatch(loginStudent(username, password));
-
                 history.push("/");
             } catch (e) {
                 alert(e);
@@ -82,7 +87,7 @@ export default function SignIn() {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <div className={classes.paper}>
+            <Paper className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
@@ -119,8 +124,8 @@ export default function SignIn() {
                     <FormControlLabel
                         control={<Checkbox
                             name="teacher"
-                            value={formData.teacher}
-                            onChange={handleChange}
+                            checked={isTeacher}
+                            onChange={handleTeacher}
                             color="primary" />}
                         label="I am a teacher"
                     />
@@ -132,16 +137,16 @@ export default function SignIn() {
                         className={classes.submit}
                     >
                         Sign In
-          </Button>
+                    </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
                             <Link href="signup" variant="body2">
                                 Don't have an account? Sign up
-              </Link>
+                            </Link>
                         </Grid>
                     </Grid>
                 </form>
-            </div>
+            </Paper>
             <Box mt={8}>
                 <Copyright />
             </Box>

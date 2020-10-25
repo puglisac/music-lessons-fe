@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,7 +30,10 @@ function AddStudentButton() {
 
     return (
         <>
-            <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
+            <Button aria-describedby={id}
+                variant="contained"
+                color="primary"
+                onClick={handleClick}>
                 Add student
       </Button>
             <Popover
@@ -48,7 +50,9 @@ function AddStudentButton() {
                     horizontal: 'center',
                 }}
             >
-                <Typography className={classes.typography}><AddStudentForm teacher_username={user.username} /></Typography>
+                <Typography className={classes.typography}>
+                    <AddStudentForm teacher_username={user.username} />
+                </Typography>
             </Popover>
         </>
     );

@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Copyright from './Copyright';
-import { useDispatch, useSelector } from "react-redux";
-import { editTeacher, loginTeacher } from "./actions/teachers";
-import { editStudent, loginStudent } from "./actions/students";
-import { useHistory } from "react-router-dom";
+import { deleteTeacher, editTeacher } from "./actions/teachers";
+import { deleteStudent, editStudent } from "./actions/students";
+import AreYouSure from './AreYouSure';
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,13 +41,18 @@ export default function EditUserForm({ close }) {
     const { token } = useSelector((st) => st.token);
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
+    const BASE_URL = "http://localhost:5000/";
+
     const initialState = {
         username: user.username,
         full_name: user.full_name,
         email: user.email,
         password: ""
     };
+
     const [formData, setFormData] = useState(initialState);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((data) => ({
@@ -58,13 +61,20 @@ export default function EditUserForm({ close }) {
         }));
     };
 
-    const login = (username, password) => {
+    const login = async (username, password) => {
 
         if (user.is_teacher) {
-            return dispatch(loginTeacher(username, password));
+            try {
+                return await axios.post(`${BASE_URL}teachers/login`, { username, password });
+            } catch (e) {
+                alert(e.response.data.message);
+            }
         } else {
-            return dispatch(loginStudent(username, password));
-
+            try {
+                await axios.post(`${BASE_URL}students/login`, { username, password });
+            } catch (e) {
+                alert(e.response.data.message);
+            }
         }
     };
 
@@ -74,14 +84,14 @@ export default function EditUserForm({ close }) {
 
         if (user.is_teacher) {
             try {
-                if (login(user.username, password)) {
+                if (await login(user.username, password)) {
                     dispatch(editTeacher(user.username, { full_name, email }, token));
                     close();
                 }
             } catch (e) {
                 console.log(e);
             }
-        } else if (login(user.username, password)) {
+        } else if (await login(user.username, password)) {
             try {
                 dispatch(editStudent(user.username, { full_name, email }, token));
                 close();
@@ -89,6 +99,28 @@ export default function EditUserForm({ close }) {
                 console.log(e);
             }
         }
+    };
+
+    const deleteUser = async (username) => {
+        const { password } = formData;
+        if (user.is_teacher) {
+            try {
+                if (await login(username, password)) {
+                    dispatch(deleteTeacher(username, token));
+                    history.push("/");
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        } else if (await login(username, password)) {
+            try {
+                dispatch(deleteStudent(username, token));
+                history.push("/");
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
     };
 
     return (
@@ -160,6 +192,9 @@ export default function EditUserForm({ close }) {
                         Edit
                     </Button>
                 </form>
+                <AreYouSure type="accout"
+                    removeFunction={deleteUser}
+                    id={user.username} />
             </div>
 
         </Container>

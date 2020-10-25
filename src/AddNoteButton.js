@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import AddNoteForm from './AddNoteForm';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Popover from '@material-ui/core/Popover';
+import AddNoteForm from './AddNoteForm';
 
 const useStyles = makeStyles((theme) => ({
     typography: {

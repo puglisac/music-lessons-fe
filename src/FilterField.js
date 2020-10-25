@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function FilterField({ search }) {
+export default function FilterField({ search, format }) {
     const classes = useStyles();
 
     const INITIAL_STATE = { text: "" };
@@ -44,7 +44,7 @@ export default function FilterField({ search }) {
                 name="text"
                 value={formData.text}
                 onChange={handleChange}
-                label="Filter" />
+                label={format ? format : "Filter"} />
         </form>
     );
 }
