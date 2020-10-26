@@ -70,7 +70,7 @@ export default function EditUserForm({ close }) {
             }
         } else {
             try {
-                await axios.post(`${BASE_URL}students/login`, { username, password });
+                return await axios.post(`${BASE_URL}students/login`, { username, password });
             } catch (e) {
                 alert(e.response.data.message);
             }
@@ -80,7 +80,6 @@ export default function EditUserForm({ close }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { password, full_name, email } = formData;
-
         if (user.is_teacher) {
             try {
                 if (await login(user.username, password)) {
@@ -91,6 +90,7 @@ export default function EditUserForm({ close }) {
                 console.log(e);
             }
         } else if (await login(user.username, password)) {
+            console.group("edit");
             try {
                 dispatch(editStudent(user.username, { full_name, email }, token));
                 close();
