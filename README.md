@@ -1,3 +1,18 @@
+## Music Lessons
+Music lessons is a tool created for private music teachers and their students.  Once an account is created Teachers can add students and keep track of lessons: adding notes and homework assignments.  Students can then login and see the assignments and notes and mark them completed.
+
+![home](./images/home_page.png)  
+
+![add students](./images/add_student.png)  
+
+![lessons](./images/lessons.png)  
+
+![add note](./images/add_note.png)
+
+![add homework](./images/add_homework.png)  
+
+<hr>
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
