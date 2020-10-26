@@ -1,5 +1,10 @@
 ## Music Lessons
+
+**deployed at: [https://music-lessons-fe.herokuapp.com/](https://music-lessons-fe.herokuapp.com/)**
+
 Music lessons is a tool created for private music teachers and their students.  Once an account is created Teachers can add students and keep track of lessons: adding notes and homework assignments.  Students can then login and see the assignments and notes and mark them completed.
+
+This app uses the music-lessons-api which can be found [here](https://github.com/puglisac/music-lessons-be).
 
 ![home](./images/home_page.png)  
 
