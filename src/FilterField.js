@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +21,6 @@ export default function FilterField({ search, format }) {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         search(formData.text);
-
     };
 
     /** Update local state w/curr state of input elem */
@@ -31,7 +31,6 @@ export default function FilterField({ search, format }) {
             ...fData,
             [name]: value
         }));
-        console.log(formData.text);
     };
 
     return (
