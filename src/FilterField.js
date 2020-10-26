@@ -26,7 +26,6 @@ export default function FilterField({ search, format }) {
     /** Update local state w/curr state of input elem */
 
     const handleChange = (evt) => {
-
         const { name, value } = evt.target;
         setFormData((fData) => ({
             ...fData,
