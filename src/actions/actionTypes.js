@@ -6,4 +6,4 @@ export const GET_NOTES = "GET_NOTES";
 export const GET_HOMEWORK = "GET_HOMEWORK";
 export const GET_TEACHER = "GET_TEACHER";
 export const LOGOUT = "LOGOUT";
-export const BASE_URL = "http://localhost:5000/";
+export const BASE_URL = "https://music-lessons-api.herokuapp.com/";

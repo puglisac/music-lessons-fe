@@ -63,7 +63,7 @@ export default function StudentDetails() {
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     if (!Array.isArray(students)) {
-        if (students.teacher_username != user.username) {
+        if (students.teacher_username !== user.username) {
             return (
                 <Redirect to="/" />
             );

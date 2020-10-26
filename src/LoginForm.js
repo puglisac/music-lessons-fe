@@ -66,7 +66,7 @@ export default function SignIn() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { username, password, teacher } = formData;
+        const { username, password } = formData;
         if (isTeacher) {
             try {
                 dispatch(loginTeacher(username, password));
