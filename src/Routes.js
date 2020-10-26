@@ -24,10 +24,10 @@ function Routes() {
                     {home}
                 </Route>
                 <Route exact path="/signup">
-                    <SignupForm />
+                    {user ? <Redirect to="/" /> : <SignupForm />}
                 </Route>
                 <Route exact path="/login">
-                    <LoginForm />
+                    {user ? <Redirect to="/" /> : <LoginForm />}
                 </Route>
                 <Route exact path="/student/:student_username">
                     {user ? <StudentDetails /> : <Redirect to="/" />}
