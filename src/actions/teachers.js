@@ -103,7 +103,6 @@ function searchStudents(username, search, _token) {
         try {
             const { data } = await axios.get(`${BASE_URL}teachers/${username}/students`,
                 { params: { search, _token } });
-            console.log(data.students);
             dispatch(gotStudents(data.students));
         } catch (e) {
             if (e.response.data.status === 404) {
