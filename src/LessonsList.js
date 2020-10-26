@@ -33,7 +33,7 @@ export default function LessonsList({ teacher_username, student_username }) {
     }, [dispatch, student_username, teacher_username, token]);
 
     const lessonsArray = (start) => {
-        const end = start + 10;
+        const end = start + 9;
         return lessons.slice(start, end);
     };
     let lessonsPages;
