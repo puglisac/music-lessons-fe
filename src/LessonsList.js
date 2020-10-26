@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from '@material-ui/core/Link';
 import Table from '@material-ui/core/Table';
@@ -10,15 +10,13 @@ import Title from './Title';
 import { deleteLesson, getLessons, searchLessons } from './actions/lessons';
 import AreYouSure from './AreYouSure';
 import FilterField from './FilterField';
-
-
-
+import Pagination from './Pagination';
 
 export default function LessonsList({ teacher_username, student_username }) {
     const { token } = useSelector((st) => st.token);
     const { lessons } = useSelector((st) => st.lessons);
     const { user } = useSelector((st) => st.user);
-
+    const [page, setPage] = useState(0);
     const dispatch = useDispatch();
 
 
@@ -34,6 +32,31 @@ export default function LessonsList({ teacher_username, student_username }) {
         dispatch(getLessons(teacher_username, student_username, token));
     }, [dispatch, student_username, teacher_username, token]);
 
+    const lessonsArray = (start) => {
+        const end = start + 10;
+        return lessons.slice(start, end);
+    };
+    let lessonsPages;
+
+    if (Array.isArray(lessons)) {
+        lessonsPages = lessonsArray(page);
+    }
+
+    const pageUp = () => {
+        setPage(page + 10);
+    };
+
+    const pageDown = () => {
+        setPage(page - 10);
+    };
+    if (page > lessons.length) {
+        setPage(lessons.length - 10);
+    }
+    if (page < 0) {
+        setPage(0);
+    }
+    console.log(page);
+
     return (
         <React.Fragment>
             <Title>Lessons</Title>
@@ -47,7 +70,7 @@ export default function LessonsList({ teacher_username, student_username }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {Array.isArray(lessons) ? lessons.map((row) => (
+                    {lessonsPages ? lessonsPages.map((row) => (
 
                         <TableRow key={row.id}>
                             <TableCell >
@@ -62,7 +85,7 @@ export default function LessonsList({ teacher_username, student_username }) {
                     )) : null}
                 </TableBody>
             </Table>
-
+            <Pagination up={pageUp} down={pageDown} />
         </React.Fragment>
     );
 }
