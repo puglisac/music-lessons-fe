@@ -33,7 +33,7 @@ export default function LessonsList({ teacher_username, student_username }) {
     }, [dispatch, student_username, teacher_username, token]);
 
     const lessonsArray = (start) => {
-        const end = start + 9;
+        const end = start + 10;
         return lessons.slice(start, end);
     };
     let lessonsPages;
@@ -43,11 +43,11 @@ export default function LessonsList({ teacher_username, student_username }) {
     }
 
     const pageUp = () => {
-        setPage(page + 9);
+        setPage(page + 10);
     };
 
     const pageDown = () => {
-        setPage(page - 9);
+        setPage(page - 10);
     };
     if (lessons) {
         if (page > lessons.length) {
