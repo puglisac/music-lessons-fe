@@ -43,19 +43,21 @@ export default function LessonsList({ teacher_username, student_username }) {
     }
 
     const pageUp = () => {
-        setPage(page + 10);
+        setPage(page + 9);
     };
 
     const pageDown = () => {
-        setPage(page - 10);
+        setPage(page - 9);
     };
-    if (page > lessons.length) {
-        setPage(lessons.length - 10);
+    if (lessons) {
+        if (page > lessons.length) {
+            setPage(lessons.length - 10);
+        }
+        if (page < 0) {
+            setPage(0);
+        }
     }
-    if (page < 0) {
-        setPage(0);
-    }
-    console.log(page);
+
 
     return (
         <React.Fragment>
