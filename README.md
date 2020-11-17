@@ -20,6 +20,22 @@ This app uses the music-lessons-api which can be found [here](https://github.com
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Installation
+To install, follow these steps:
+
+Via Downloading from GitHub:
+
+Download this repository onto your machine by clicking the "Clone or Download" button or Fork the repo into your own Github account
+Download and extract the zip file to a directory of your choice.  
+
+Via command line:
+
+`$ git clone https://github.com/puglisac/music-lessons-fe.git`  
+
+Install dependencies
+
+`npm install` 
+
 ## Available Scripts
 
 In the project directory, you can run:
