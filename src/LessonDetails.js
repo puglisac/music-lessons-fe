@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,6 +16,7 @@ import HomeworkList from './HomeworkList';
 import { getOneLesson } from './actions/lessons';
 import AddHomeworkButton from './AddHomeworkButton';
 import AddNoteButton from "./AddNoteButton";
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     typography: {
         padding: theme.spacing(2),
     },
+    backButton: {
+        marginTop: theme.spacing(2),
+    }
 }));
 
 export default function LessonDetails() {
@@ -56,6 +60,8 @@ export default function LessonDetails() {
     const { lesson_id } = useParams();
     const classes = useStyles();
 
+    const history = useHistory();
+
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     let teacher_username;
@@ -67,8 +73,6 @@ export default function LessonDetails() {
     useEffect(() => {
         dispatch(getOneLesson(teacher_username, student_username, lesson_id, token));
     }, [dispatch, lesson_id, student_username, teacher_username, token]);
-
-
 
     return (
         <div className={classes.root}>
@@ -105,7 +109,13 @@ export default function LessonDetails() {
                             {user.is_teacher ? <AddHomeworkButton /> : null}
                         </Grid>
                     </Grid>
-
+                    <Grid>
+                        <Button className={classes.backButton}
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => history.goBack()}>Go Back
+                        </Button>
+                    </Grid>
                     <Box pt={4}>
                         <Copyright />
                     </Box>
