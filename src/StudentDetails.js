@@ -85,7 +85,7 @@ export default function StudentDetails() {
                                     Student:
                                 </Typography>
                                 <h2>{students.username}</h2>
-                                <h4>{students.email} </h4>
+                                <h4><a href={`mailto:${students.email}`}>{students.email} </a></h4>
                             </Paper>
                         </Grid>
                         {/* Lessons */}

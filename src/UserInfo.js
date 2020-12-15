@@ -24,7 +24,7 @@ export default function UserInfo({ title, user, teacher }) {
             </CardActions>
             {teacher ? <Typography variant="body2" component="p">
                 Teacher: {teacher.username} <br />
-                    Teacher email: {teacher.email}
+                    Teacher email: <a href={`mailto:${teacher.email}`}>{teacher.email}</a>
                 <br />
             </Typography> : null}
         </div>
