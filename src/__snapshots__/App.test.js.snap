@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <header>
+      <div
+        class="makeStyles-root-15"
+      >
+        <header
+          class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
+        >
+          <div
+            class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+          >
+            <div>
+              <button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiIconButton-label"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </button>
+              <div
+                class="PrivateSwipeArea-root-24 PrivateSwipeArea-anchorLeft-25"
+                style="width: 20px;"
+              />
+            </div>
+            <h6
+              class="MuiTypography-root makeStyles-title-17 MuiTypography-h6"
+            >
+              <a
+                aria-disabled="false"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
+                href="/"
+                tabindex="0"
+              >
+                <span
+                  class="MuiButton-label"
+                >
+                  Music Lessons
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </a>
+            </h6>
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
+              href="login"
+              tabindex="0"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                Login
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </a>
+          </div>
+        </header>
+      </div>
+    </header>
+    <div>
+      <main
+        class="MuiContainer-root MuiContainer-maxWidthXs"
+      >
+        <div
+          class="makeStyles-paper-22"
+        >
+          <div
+            class="MuiPaper-root MuiCard-root makeStyles-root-20 MuiPaper-elevation1 MuiPaper-rounded"
+          >
+            <button
+              class="MuiButtonBase-root MuiCardActionArea-root"
+              tabindex="0"
+              type="button"
+            >
+              <div
+                id="image"
+              />
+              <div
+                class="MuiCardContent-root"
+              >
+                <h2
+                  class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom"
+                >
+                  Welcome to Music Lessons
+                </h2>
+                <p
+                  class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary"
+                >
+                  Music Lessons is a tool for private lesson teachers and students.  Create an account or login to get started!
+                </p>
+              </div>
+              <span
+                class="MuiCardActionArea-focusHighlight"
+              />
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+            <div
+              class="MuiCardActions-root MuiCardActions-spacing"
+            >
+              <a
+                aria-disabled="false"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
+                href="/login"
+                tabindex="0"
+              >
+                <span
+                  class="MuiButton-label"
+                >
+                  Login
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </a>
+              <a
+                aria-disabled="false"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
+                href="/signup"
+                tabindex="0"
+              >
+                <span
+                  class="MuiButton-label"
+                >
+                  Signup
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiBox-root MuiBox-root-23"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-alignCenter"
+          >
+            Copyright © 
+            <a
+              class="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorInherit"
+              href="https://material-ui.com/"
+            >
+              Music Lessons
+            </a>
+             2020.
+          </p>
+        </div>
+      </main>
+    </div>
+  </div>
+</DocumentFragment>
+`;
